@@ -4,23 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maharashtra Geo-Economic & Real Estate Analyzer</title>
-    <meta name="description" content="Search any district, taluka or village in Maharashtra to view ML-predicted real estate prices, employment data and business opportunity scores.">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <meta name="description" content="AI/ML Powered Real Estate Valuation, Investment ROI & Business Viability Platform covering all 36 districts of Maharashtra.">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Animated Background Particles -->
-    <div class="bg-particles" id="particles"></div>
+    <!-- Ambient Glowing Gradient Orbs (Bleed through frosted glass) -->
+    <div class="bg-particles" id="particles">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
 
     <!-- Header -->
-    <header class="header">
+    <header class="header glass-panel">
         <div class="header-content">
             <div class="logo">
                 <span class="logo-icon">📊</span>
                 <div>
                     <h1>Maharashtra Geo-Economic Analyzer</h1>
-                    <p class="subtitle">AI/ML Powered Real Estate & Business Intelligence</p>
+                    <p class="subtitle">Next-Gen AIML Real Estate Valuation & Investment Intelligence</p>
                 </div>
             </div>
             <div class="header-stats" id="headerStats">
@@ -31,18 +35,18 @@
         </div>
     </header>
 
-    <!-- Main Content -->
+    <!-- Main Container -->
     <main class="main-container">
 
         <!-- Search Section -->
         <section class="search-section">
-            <div class="search-wrapper">
+            <div class="search-wrapper glass-panel">
                 <div class="search-icon">🔍</div>
                 <input 
                     type="text" 
                     id="searchInput" 
                     class="search-input" 
-                    placeholder="Search any District, Taluka, or Village... (e.g., Mumbai, Wagholi, Shirsoli)"
+                    placeholder="Search any District, Taluka, or Village... (e.g., Mumbai, Hinjawadi, Shirsoli, Wagholi)"
                     autocomplete="off"
                 >
                 <button class="search-btn" id="searchBtn">Analyze</button>
@@ -62,12 +66,13 @@
             </div>
         </section>
 
-        <!-- Results Dashboard (Hidden by default) -->
+        <!-- Results Dashboard (Hidden by default, shown on search) -->
         <section class="dashboard" id="dashboard" style="display: none;">
 
-            <!-- Location Header -->
-            <div class="location-header" id="locationHeader">
+            <!-- Bento Location Header Bar -->
+            <div class="glass-panel location-header" id="locationHeader">
                 <div class="location-info">
+                    <span class="location-eyebrow">GEOSPATIAL ECONOMIC DOSSIER</span>
                     <h2 id="locationTitle">Loading...</h2>
                     <p id="locationSubtitle" class="location-sub"></p>
                 </div>
@@ -76,152 +81,192 @@
                 </div>
             </div>
 
-            <!-- Price Cards -->
-            <div class="section-title">
-                <span class="section-icon">🏠</span>
-                <h3>Real Estate Average Prices</h3>
-            </div>
-            <div class="cards-row">
-                <div class="price-card card-1bhk">
-                    <div class="card-label">1 BHK</div>
-                    <div class="card-value" id="price1bhk">—</div>
-                    <div class="card-unit">Average Price</div>
-                    <div class="card-glow"></div>
-                </div>
-                <div class="price-card card-2bhk">
-                    <div class="card-label">2 BHK</div>
-                    <div class="card-value" id="price2bhk">—</div>
-                    <div class="card-unit">Average Price</div>
-                    <div class="card-glow"></div>
-                </div>
-                <div class="price-card card-3bhk">
-                    <div class="card-label">3 BHK</div>
-                    <div class="card-value" id="price3bhk">—</div>
-                    <div class="card-unit">Average Price</div>
-                    <div class="card-glow"></div>
-                </div>
-                <div class="price-card card-future">
-                    <div class="card-label">5-Yr Forecast 🔮</div>
-                    <div class="card-value" id="priceFuture">—</div>
-                    <div class="card-unit">Linear Regression</div>
-                    <div class="card-glow"></div>
-                </div>
-                <div class="price-card card-roi">
-                    <div class="card-label">Estimated ROI 💰</div>
-                    <div class="card-value" id="priceRoi">—</div>
-                    <div class="card-unit">5-Yr Capital Gain</div>
-                    <div class="card-glow"></div>
-                </div>
-            </div>
-
-            <!-- Employment Section -->
-            <div class="section-title">
-                <span class="section-icon">💼</span>
-                <h3>Employment & Economic Indicators</h3>
-            </div>
-            <div class="employment-row">
-                <div class="emp-card emp-positive">
-                    <div class="emp-icon">👔</div>
-                    <div class="emp-data">
-                        <div class="emp-label">Employment Rate</div>
-                        <div class="emp-value" id="empRate">—</div>
+            <!-- PRIMARY BENTO GRID: Hero (2x2) + 4 Metrics (1x1 each) -->
+            <div class="bento-grid">
+                
+                <!-- 🔮 THE "HERO" TILE (Massive 2x2 Grid Square in Top Left) -->
+                <div class="glass-panel bento-hero">
+                    <div class="hero-top-row">
+                        <span class="hero-badge">PRIMARY ML FORECAST</span>
+                        <span class="hero-horizon">5-YEAR HORIZON</span>
                     </div>
+
+                    <div class="hero-content">
+                        <div class="card-label">5-Year Capital Value Prediction</div>
+                        <div class="hero-value" id="priceFuture">—</div>
+                        
+                        <div class="hero-roi-pill">
+                            <span class="roi-label">Capital Appreciation:</span>
+                            <span class="roi-value" id="priceRoi">—</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-footer-metrics">
+                        <div class="hero-stat-item">
+                            <span class="stat-caption">Algorithm</span>
+                            <span class="stat-highlight">Linear Reg (R² > 0.99)</span>
+                        </div>
+                        <div class="hero-stat-item">
+                            <span class="stat-caption">Annual Yield</span>
+                            <span class="stat-highlight">~8.4% p.a.</span>
+                        </div>
+                        <div class="hero-stat-item">
+                            <span class="stat-caption">Target Period</span>
+                            <span class="stat-highlight">2026 – 2031</span>
+                        </div>
+                    </div>
+                    <div class="card-glow glow-hero"></div>
+                </div>
+
+                <!-- 🏠 THE "METRIC" TILES (1x1 each stacked on the right) -->
+                <!-- 1 BHK Tile (1x1) -->
+                <div class="glass-panel bento-tile tile-1bhk">
+                    <div class="card-label">1 BHK Average</div>
+                    <div class="card-value" id="price1bhk">—</div>
+                    <div class="card-unit">Entry Level Flat Benchmark</div>
+                    <div class="card-glow glow-1bhk"></div>
+                </div>
+
+                <!-- 2 BHK Tile (1x1) -->
+                <div class="glass-panel bento-tile tile-2bhk">
+                    <div class="card-label">2 BHK Average</div>
+                    <div class="card-value" id="price2bhk">—</div>
+                    <div class="card-unit">Family Residential Benchmark</div>
+                    <div class="card-glow glow-2bhk"></div>
+                </div>
+
+                <!-- 3 BHK Tile (1x1) -->
+                <div class="glass-panel bento-tile tile-3bhk">
+                    <div class="card-label">3 BHK Average</div>
+                    <div class="card-value" id="price3bhk">—</div>
+                    <div class="card-unit">Premium Residential Benchmark</div>
+                    <div class="card-glow glow-3bhk"></div>
+                </div>
+
+                <!-- Employment & Workforce Tile (1x1) -->
+                <div class="glass-panel bento-tile tile-emp">
+                    <div class="card-label">Workforce & Employment</div>
+                    <div class="card-value emp-text" id="empRate">—</div>
                     <div class="emp-bar-container">
                         <div class="emp-bar emp-bar-green" id="empBar" style="width: 0%"></div>
                     </div>
-                </div>
-                <div class="emp-card emp-negative">
-                    <div class="emp-icon">📉</div>
-                    <div class="emp-data">
-                        <div class="emp-label">Unemployment Rate</div>
-                        <div class="emp-value" id="unempRate">—</div>
+                    <div class="emp-mini-footer">
+                        <span>Unemployment:</span>
+                        <strong id="unempRate">—</strong>
                     </div>
-                    <div class="emp-bar-container">
-                        <div class="emp-bar emp-bar-red" id="unempBar" style="width: 0%"></div>
+                    <!-- Hidden safety element for app.js sync -->
+                    <div id="unempBar" style="display: none;"></div>
+                    <div class="card-glow glow-emp"></div>
+                </div>
+
+            </div>
+
+            <!-- 🌐 THE "WIDE" TILE (3x1 / Full-Width Socio-Economic Banner) -->
+            <div class="glass-panel bento-wide-tile">
+                <div class="wide-tile-header">
+                    <div class="wide-header-left">
+                        <span class="wide-badge">📍 LOCALITY ECONOMIC CONTEXT</span>
+                        <span class="wide-sector" id="localityType">—</span>
+                    </div>
+                    <span class="wide-algo-tag">K-Means Cluster Profiling</span>
+                </div>
+                <div class="wide-tile-body">
+                    <div class="wide-col">
+                        <div class="wide-col-label">Village / Locality Specific Profile</div>
+                        <p class="wide-col-text" id="villageInfo">—</p>
+                    </div>
+                    <div class="wide-col">
+                        <div class="wide-col-label">Future Commercial Scope & Growth Catalysts</div>
+                        <p class="wide-col-text" id="growthScope">—</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Price Comparison Chart -->
-            <div class="section-title">
-                <span class="section-icon">📈</span>
-                <h3>Price Comparison</h3>
-            </div>
-            <div class="chart-container">
-                <canvas id="priceChart"></canvas>
-            </div>
-
-            <!-- Hyper-Local Village Profile & Growth Scope -->
-            <div class="section-title">
-                <span class="section-icon">📍</span>
-                <h3>Locality Profile & Future Scope</h3>
-            </div>
-            <div class="cards-row" style="grid-template-columns: 1fr 1fr; margin-bottom: 2rem;">
-                <div class="price-card" style="text-align: left; padding: 1.25rem;">
-                    <div class="card-label" style="color: #93C5FD; font-size: 0.85rem; margin-bottom: 0.5rem;">Economic Profile & Sector</div>
-                    <div style="font-weight: 700; font-size: 1.05rem; color: #F8FAFC; margin-bottom: 0.5rem;" id="localityType">—</div>
-                    <div style="color: #90A1B9; font-size: 0.88rem; line-height: 1.5;" id="villageInfo">—</div>
+            <!-- 📊 SECONDARY BENTO ROW: Chart (1.2fr) + Business Suggestions (1fr) -->
+            <div class="bento-secondary-row">
+                
+                <!-- Price Comparison Chart Tile -->
+                <div class="glass-panel bento-chart-tile">
+                    <div class="bento-panel-header">
+                        <span class="panel-icon">📈</span>
+                        <div>
+                            <div class="card-label">Harmonized Property Scale</div>
+                            <h3>1 BHK vs 2 BHK vs 3 BHK Prices</h3>
+                        </div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="priceChart"></canvas>
+                    </div>
                 </div>
-                <div class="price-card" style="text-align: left; padding: 1.25rem;">
-                    <div class="card-label" style="color: #10B981; font-size: 0.85rem; margin-bottom: 0.5rem;">Commercial & Future Scope</div>
-                    <div style="font-weight: 700; font-size: 1.05rem; color: #10B981; margin-bottom: 0.5rem;">High Growth Potential</div>
-                    <div style="color: #90A1B9; font-size: 0.88rem; line-height: 1.5;" id="growthScope">—</div>
+
+                <!-- AI Business Suggestions Tile -->
+                <div class="glass-panel bento-biz-tile">
+                    <div class="bento-panel-header">
+                        <span class="panel-icon">💡</span>
+                        <div>
+                            <div class="card-label">Viability Engine</div>
+                            <h3>Recommended Ventures</h3>
+                        </div>
+                    </div>
+                    <div class="suggestions-grid" id="bizSuggestions"></div>
+                </div>
+
+            </div>
+
+            <!-- 📋 DATA TABLE TILE (Full Width) -->
+            <div class="glass-panel bento-table-tile">
+                <div class="bento-panel-header table-bar">
+                    <div class="table-bar-left">
+                        <span class="panel-icon">📋</span>
+                        <div>
+                            <div class="card-label">Regional Directory</div>
+                            <h3>Matching Locality Records</h3>
+                        </div>
+                    </div>
+                    <span class="result-count" id="resultCount"></span>
+                </div>
+                <div class="table-wrapper">
+                    <table class="data-table" id="dataTable">
+                        <thead>
+                            <tr>
+                                <th>District</th>
+                                <th>Taluka</th>
+                                <th>Village / Ward</th>
+                                <th>Sector / Profile</th>
+                                <th>1 BHK (₹L)</th>
+                                <th>2 BHK (₹L)</th>
+                                <th>Emp %</th>
+                                <th>Opportunity</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
                 </div>
             </div>
 
-            <!-- Business Suggestions -->
-            <div class="section-title">
-                <span class="section-icon">💡</span>
-                <h3>AI Business Suggestions</h3>
-            </div>
-            <div class="suggestions-grid" id="bizSuggestions"></div>
-
-            <!-- Data Table -->
-            <div class="section-title">
-                <span class="section-icon">📋</span>
-                <h3>Matching Locations</h3>
-                <span class="result-count" id="resultCount"></span>
-            </div>
-            <div class="table-wrapper">
-                <table class="data-table" id="dataTable">
-                    <thead>
-                        <tr>
-                            <th>District</th>
-                            <th>Taluka</th>
-                            <th>Village</th>
-                            <th>Sector / Profile</th>
-                            <th>1 BHK (₹L)</th>
-                            <th>2 BHK (₹L)</th>
-                            <th>Emp %</th>
-                            <th>Opportunity</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody"></tbody>
-                </table>
-            </div>
         </section>
 
         <!-- Welcome State (shown when no search) -->
         <section class="welcome-state" id="welcomeState">
             <div class="welcome-icon">🏙️</div>
             <h2>Explore Maharashtra's Economic Landscape</h2>
-            <p>Search for any of the <strong>36 districts</strong>, talukas, or villages to view ML-predicted real estate prices, employment data, and AI-powered business opportunity scores.</p>
+            <p>Search across <strong>36 districts, 340 talukas, and 1,701 localities</strong> to view ML-predicted property valuations, socio-economic profiles, and commercial growth scopes.</p>
             <div class="welcome-features">
-                <div class="feature">
+                <div class="feature glass-panel">
                     <span class="feature-icon">🏠</span>
-                    <span>Property Prices</span>
+                    <span>Property Prices (1/2/3 BHK)</span>
                 </div>
-                <div class="feature">
+                <div class="feature glass-panel">
                     <span class="feature-icon">💼</span>
-                    <span>Employment Data</span>
+                    <span>Workforce & Employment</span>
                 </div>
-                <div class="feature">
+                <div class="feature glass-panel">
                     <span class="feature-icon">🤖</span>
-                    <span>ML Predictions</span>
+                    <span>ML 5-Year Capital Forecast</span>
                 </div>
-                <div class="feature">
+                <div class="feature glass-panel">
                     <span class="feature-icon">💡</span>
-                    <span>Business Ideas</span>
+                    <span>K-Means Business Ideas</span>
                 </div>
             </div>
         </section>
@@ -236,6 +281,7 @@
     </main>
 
     <!-- Footer -->
+    <footer class="footer">
         <p>AIML Project — K-Means Clustering & Linear Regression</p>
         <p class="footer-sub">Dataset: 36 Districts • 340 Talukas • 1,701 Verified Locations of Maharashtra</p>
     </footer>

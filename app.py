@@ -1435,10 +1435,35 @@ def search_location(query):
         growth_scope
     )
 
+# 2026 Bento & Glassmorphism 2.0 Theme for Gradio
+custom_css = """
+body, .gradio-container {
+    background-color: #0F172A !important;
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif !important;
+}
+.glass-panel, .gr-box, .gr-panel, .gr-form, .block {
+    background: rgba(255, 255, 255, 0.03) !important;
+    backdrop-filter: blur(16px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+    border-radius: 20px !important;
+}
+button.primary, .gr-button-primary {
+    background: #3B82F6 !important;
+    color: #F8FAFC !important;
+    border-radius: 14px !important;
+    font-weight: 700 !important;
+}
+button.primary:hover, .gr-button-primary:hover {
+    background: #2563EB !important;
+}
+"""
+
 # Build Gradio UI
-with gr.Blocks(title="Maharashtra Geo-Economic & Real Estate Analyzer") as demo:
-    gr.Markdown("# Maharashtra Geo-Economic Analyzer & Real Estate ROI Predictor")
-    gr.Markdown("**AI/ML Practical Project** | Separation of Concerns (Data Ingestion -> ML Training -> Presentation)")
+with gr.Blocks(title="Maharashtra Geo-Economic & Real Estate Analyzer", css=custom_css) as demo:
+    gr.Markdown("# 🗺️ Maharashtra Geo-Economic Analyzer & Real Estate ROI Predictor")
+    gr.Markdown("**Next-Gen AIML Platform** | Separation of Concerns (Data Ingestion -> ML Training -> Presentation)")
     
     with gr.Row():
         search_input = gr.Textbox(

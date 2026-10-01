@@ -3156,6 +3156,8 @@ function performSearch(query) {
 
     document.getElementById('price1bhk').textContent = `Rs. ${avgBHK1.toFixed(2)} L`;
     document.getElementById('price2bhk').textContent = `Rs. ${avgBHK2.toFixed(2)} L`;
+    const p3El = document.getElementById('price3bhk');
+    if (p3El) p3El.textContent = `Rs. ${avgBHK3.toFixed(2)} L`;
     document.getElementById('priceFuture').textContent = `Rs. ${futurePrice.toFixed(2)} L`;
     document.getElementById('priceRoi').textContent = `+Rs. ${profit.toFixed(2)}L (+${roi.toFixed(1)}%)`;
 

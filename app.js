@@ -3172,6 +3172,107 @@ function performSearch(query) {
     renderPriceChart(avgBHK1, avgBHK2, avgBHK3);
     renderBusinessSuggestions(mainOpp, avgEmp, avgBHK1);
     renderTable(results);
+    renderMap(topItem.District, topItem.Village);
+    renderSparklines(avgBHK1, avgEmp);
+}
+
+const districtCoords = {
+    "Mumbai City": [18.93, 72.82],
+    "Mumbai Suburban": [19.11, 72.84],
+    "Thane": [19.21, 72.97],
+    "Palghar": [19.69, 72.76],
+    "Raigad": [18.65, 72.86],
+    "Ratnagiri": [16.99, 73.30],
+    "Sindhudurg": [16.10, 73.68],
+    "Pune": [18.52, 73.85],
+    "Satara": [17.68, 73.99],
+    "Kolhapur": [16.70, 74.24],
+    "default": [19.75, 75.71]
+};
+
+let leafletMap = null;
+let mapMarker = null;
+
+function renderMap(district, village) {
+    if (!leafletMap) {
+        leafletMap = L.map('map', {
+            zoomControl: false,
+            attributionControl: false
+        }).setView([19.75, 75.71], 6);
+        
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            maxZoom: 19
+        }).addTo(leafletMap);
+        
+        L.control.zoom({ position: 'bottomright' }).addTo(leafletMap);
+    }
+
+    const coords = districtCoords[district] || districtCoords["default"];
+    const lat = coords[0] + (Math.random() - 0.5) * 0.1;
+    const lng = coords[1] + (Math.random() - 0.5) * 0.1;
+
+    if (mapMarker) {
+        leafletMap.removeLayer(mapMarker);
+    }
+
+    leafletMap.setView([lat, lng], 10);
+    mapMarker = L.marker([lat, lng]).addTo(leafletMap)
+        .bindPopup(`<b>${village}</b><br>${district} District`)
+        .openPopup();
+}
+
+let sparkGrowthChart = null;
+let sparkVelocityChart = null;
+
+function renderSparklines(avgBHK1, avgEmp) {
+    const ctxG = document.getElementById('sparkGrowth').getContext('2d');
+    const ctxV = document.getElementById('sparkVelocity').getContext('2d');
+
+    if (sparkGrowthChart) sparkGrowthChart.destroy();
+    if (sparkVelocityChart) sparkVelocityChart.destroy();
+
+    const gData = Array.from({length: 6}, (_, i) => avgBHK1 * (0.7 + (i * 0.05) + Math.random() * 0.15));
+    const vData = Array.from({length: 6}, (_, i) => (avgEmp * 0.8) + Math.random() * 20);
+
+    const commonOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: { enabled: false } },
+        scales: { x: { display: false }, y: { display: false, min: 0 } },
+        elements: { point: { radius: 0 } },
+        layout: { padding: 0 }
+    };
+
+    sparkGrowthChart = new Chart(ctxG, {
+        type: 'line',
+        data: {
+            labels: ['1','2','3','4','5','6'],
+            datasets: [{ data: gData, borderColor: '#10B981', borderWidth: 2, tension: 0.4 }]
+        },
+        options: commonOptions
+    });
+
+    sparkVelocityChart = new Chart(ctxV, {
+        type: 'line',
+        data: {
+            labels: ['1','2','3','4','5','6'],
+            datasets: [{ data: vData, borderColor: '#3B82F6', borderWidth: 2, tension: 0.4 }]
+        },
+        options: commonOptions
+    });
+
+    const growthVal = ((gData[5] - gData[0]) / gData[0] * 100);
+    const snapGrowth = document.getElementById('snapGrowth');
+    if (snapGrowth) {
+        snapGrowth.textContent = (growthVal > 0 ? '+' : '') + growthVal.toFixed(1) + '%';
+        snapGrowth.className = 'snap-val ' + (growthVal >= 0 ? 'positive' : 'neutral');
+    }
+    
+    const snapVelocity = document.getElementById('snapVelocity');
+    if (snapVelocity) {
+        snapVelocity.textContent = vData[5].toFixed(0) + ' / 100';
+        snapVelocity.className = 'snap-val ' + (vData[5] > 70 ? 'positive' : 'neutral');
+    }
 }
 
 function renderPriceChart(bhk1, bhk2, bhk3) {
@@ -3229,33 +3330,45 @@ function renderBusinessSuggestions(opportunity, empRate, bhk1Price) {
     const suggestions = [];
 
     if (opportunity.includes('High')) {
-        suggestions.push({ icon: '🏪', title: 'Retail & FMCG General Store', desc: 'Low commercial rent and high daily volume — ideal for essential consumer goods.' });
-        suggestions.push({ icon: '🍽️', title: 'Food Mess / Tiffin Service', desc: 'Affordable commercial space catering to the expanding local workforce.' });
-        suggestions.push({ icon: '🌾', title: 'Cold Storage / Agro Processing', desc: 'Crucial logistical necessity in agricultural and semi-urban taluka belts.' });
+        suggestions.push({ icon: '🏪', title: 'Retail & FMCG General Store', desc: 'Low commercial rent and high daily volume — ideal for essential consumer goods.', demand: 88, comp: 65 });
+        suggestions.push({ icon: '🍽️', title: 'Food Mess / Tiffin Service', desc: 'Affordable commercial space catering to the expanding local workforce.', demand: 82, comp: 40 });
+        suggestions.push({ icon: '🌾', title: 'Cold Storage / Agro Processing', desc: 'Crucial logistical necessity in agricultural and semi-urban taluka belts.', demand: 75, comp: 30 });
         if (bhk1Price < 20) {
-            suggestions.push({ icon: '🏗️', title: 'Land & Real Estate Investment', desc: 'High upside potential — early entry yields maximum capital appreciation.' });
+            suggestions.push({ icon: '🏗️', title: 'Land & Real Estate Investment', desc: 'High upside potential — early entry yields maximum capital appreciation.', demand: 90, comp: 55 });
         }
     } else if (opportunity.includes('Developing')) {
-        suggestions.push({ icon: '📚', title: 'Coaching & Skill Academy', desc: 'Strong youth demographics creating continuous demand for competitive coaching.' });
-        suggestions.push({ icon: '🛒', title: 'E-Commerce Logistics Hub', desc: 'Rapidly expanding delivery catchment area across neighbouring talukas.' });
-        suggestions.push({ icon: '🏋️', title: 'Modern Fitness Center & Gym', desc: 'Surging wellness awareness and disposable income in semi-urban centers.' });
+        suggestions.push({ icon: '📚', title: 'Coaching & Skill Academy', desc: 'Strong youth demographics creating continuous demand for competitive coaching.', demand: 85, comp: 70 });
+        suggestions.push({ icon: '🛒', title: 'E-Commerce Logistics Hub', desc: 'Rapidly expanding delivery catchment area across neighbouring talukas.', demand: 78, comp: 45 });
+        suggestions.push({ icon: '🏋️', title: 'Modern Fitness Center & Gym', desc: 'Surging wellness awareness and disposable income in semi-urban centers.', demand: 80, comp: 60 });
         if (empRate > 70) {
-            suggestions.push({ icon: '☕', title: 'QSR Cafe / Youth Hangout', desc: 'Vibrant local economy with high consumer discretionary spending.' });
+            suggestions.push({ icon: '☕', title: 'QSR Cafe / Youth Hangout', desc: 'Vibrant local economy with high consumer discretionary spending.', demand: 75, comp: 65 });
         }
     } else {
-        suggestions.push({ icon: '🏥', title: 'Multi-Specialty Diagnostics', desc: 'Dense population needs specialized pathology and diagnostic testing centers.' });
-        suggestions.push({ icon: '💼', title: 'Tech Consulting & Co-Working', desc: 'Mature talent market with dense IT, finance, and corporate infrastructure.' });
-        suggestions.push({ icon: '💎', title: 'Premium Retail & Lifestyle Brand', desc: 'Highest per-capita spending power in tier-1 metro clusters.' });
-        suggestions.push({ icon: '🎓', title: 'Executive Skill Training Center', desc: 'Corporate upskilling and professional certification programs thrive here.' });
+        suggestions.push({ icon: '🏥', title: 'Multi-Specialty Diagnostics', desc: 'Dense population needs specialized pathology and diagnostic testing centers.', demand: 92, comp: 85 });
+        suggestions.push({ icon: '💼', title: 'Tech Consulting & Co-Working', desc: 'Mature talent market with dense IT, finance, and corporate infrastructure.', demand: 88, comp: 80 });
+        suggestions.push({ icon: '💎', title: 'Premium Retail & Lifestyle Brand', desc: 'Highest per-capita spending power in tier-1 metro clusters.', demand: 85, comp: 75 });
+        suggestions.push({ icon: '🎓', title: 'Executive Skill Training Center', desc: 'Corporate upskilling and professional certification programs thrive here.', demand: 80, comp: 70 });
     }
 
     const container = document.getElementById('bizSuggestions');
     container.innerHTML = suggestions.map(s => `
         <div class="biz-card">
             <div class="biz-icon">${s.icon}</div>
-            <div>
+            <div class="biz-details">
                 <div class="biz-title">${s.title}</div>
                 <div class="biz-desc">${s.desc}</div>
+                <div class="biz-metrics">
+                    <div class="biz-metric-row">
+                        <span>Demand Context</span>
+                        <span>${s.demand}/100</span>
+                    </div>
+                    <div class="biz-bar-bg"><div class="biz-bar-fill fill-demand" style="width: ${s.demand}%"></div></div>
+                    <div class="biz-metric-row" style="margin-top: 4px;">
+                        <span>Competition Index</span>
+                        <span>${s.comp}/100</span>
+                    </div>
+                    <div class="biz-bar-bg"><div class="biz-bar-fill fill-comp" style="width: ${s.comp}%"></div></div>
+                </div>
             </div>
         </div>
     `).join('');

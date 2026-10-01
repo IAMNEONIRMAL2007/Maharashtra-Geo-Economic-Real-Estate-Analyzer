@@ -1028,3 +1028,171 @@ body {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.12); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.25); }
+
+/* ------------------------------------------------------------
+   MAP & SNAPSHOT ROW
+   ------------------------------------------------------------ */
+.bento-map-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+@media (min-width: 992px) {
+    .bento-map-row {
+        grid-template-columns: 1.5fr 1fr;
+    }
+}
+
+.bento-map-tile,
+.bento-snapshot-tile {
+    padding: 26px 28px;
+    display: flex;
+    flex-direction: column;
+}
+
+.map-wrapper {
+    flex: 1;
+    min-height: 350px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--glass-border);
+    position: relative;
+    z-index: 1; /* For leaflet controls */
+}
+
+/* Leaflet Dark Theme Override */
+.leaflet-container {
+    background: #0B1120 !important;
+    font-family: inherit;
+}
+.leaflet-tile-pane {
+    filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) brightness(0.7);
+}
+.leaflet-control-zoom {
+    border: none !important;
+    background: rgba(15, 23, 42, 0.8) !important;
+    backdrop-filter: blur(8px);
+}
+.leaflet-control-zoom a {
+    background: transparent !important;
+    color: var(--text-primary) !important;
+    border-color: var(--glass-border) !important;
+}
+.leaflet-popup-content-wrapper {
+    background: rgba(15, 23, 42, 0.95) !important;
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary) !important;
+    border-radius: var(--radius-sm) !important;
+    box-shadow: var(--glass-shadow-hover) !important;
+}
+.leaflet-popup-tip {
+    background: rgba(15, 23, 42, 0.95) !important;
+}
+
+/* Snapshot Grid */
+.snapshot-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+    justify-content: center;
+}
+
+.snapshot-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.snapshot-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.snap-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.snap-val {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--text-primary);
+}
+.snap-val.positive {
+    color: var(--accent-emerald);
+}
+.snap-val.neutral {
+    color: var(--accent-amber);
+}
+
+.sparkline-container {
+    height: 60px;
+    width: 100%;
+    position: relative;
+}
+
+/* Business Intelligence Demand/Competition Bars */
+.biz-details {
+    flex: 1;
+}
+
+.biz-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.biz-desc {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.biz-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 12px;
+    width: 100%;
+}
+
+.biz-metric-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.biz-bar-bg {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+    margin-top: 2px;
+}
+
+.biz-bar-fill {
+    height: 100%;
+    border-radius: var(--radius-pill);
+    transition: width 1s ease-out;
+}
+
+.fill-demand { background: var(--accent-emerald); box-shadow: 0 0 8px rgba(16, 185, 129, 0.4); }
+.fill-comp { background: var(--accent-rose); box-shadow: 0 0 8px rgba(225, 29, 72, 0.4); }

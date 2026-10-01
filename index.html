@@ -6,6 +6,7 @@
     <title>Maharashtra Geo-Economic & Real Estate Analyzer</title>
     <meta name="description" content="AI/ML Powered Real Estate Valuation, Investment ROI & Business Viability Platform covering all 36 districts of Maharashtra.">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -161,6 +162,50 @@
 
             </div>
 
+            <!-- 🗺️ MAP & SNAPSHOT ROW -->
+            <div class="bento-map-row">
+                
+                <!-- Interactive Map Tile -->
+                <div class="glass-panel bento-map-tile">
+                    <div class="bento-panel-header">
+                        <span class="panel-icon">🗺️</span>
+                        <div>
+                            <div class="card-label">Geospatial Intelligence</div>
+                            <h3>Interactive Heatmap & Topology</h3>
+                        </div>
+                    </div>
+                    <div class="map-wrapper" id="map"></div>
+                </div>
+
+                <!-- Intelligence Snapshot (Sparklines) -->
+                <div class="glass-panel bento-snapshot-tile">
+                    <div class="bento-panel-header">
+                        <span class="panel-icon">⚡</span>
+                        <div>
+                            <div class="card-label">Real-Time Metrics</div>
+                            <h3>Intelligence Snapshot</h3>
+                        </div>
+                    </div>
+                    <div class="snapshot-grid">
+                        <div class="snapshot-card">
+                            <div class="snapshot-info">
+                                <span class="snap-label">5Y Growth Trend</span>
+                                <span class="snap-val" id="snapGrowth">Loading...</span>
+                            </div>
+                            <div class="sparkline-container"><canvas id="sparkGrowth"></canvas></div>
+                        </div>
+                        <div class="snapshot-card">
+                            <div class="snapshot-info">
+                                <span class="snap-label">Market Velocity</span>
+                                <span class="snap-val" id="snapVelocity">Loading...</span>
+                            </div>
+                            <div class="sparkline-container"><canvas id="sparkVelocity"></canvas></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
             <!-- 🌐 THE "WIDE" TILE (3x1 / Full-Width Socio-Economic Banner) -->
             <div class="glass-panel bento-wide-tile">
                 <div class="wide-tile-header">
@@ -286,7 +331,8 @@
         <p class="footer-sub">Dataset: 36 Districts • 340 Talukas • 1,701 Verified Locations of Maharashtra</p>
     </footer>
 
-    <!-- Chart.js CDN -->
+    <!-- Leaflet & Chart.js CDN -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     <script src="app.js"></script>
 </body>

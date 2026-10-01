@@ -1,0 +1,11 @@
+# Python caches and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Temporary and checkpoint files
+.ipynb_checkpoints/
+scratch/
+outputs/
+*.tmp
+*.log

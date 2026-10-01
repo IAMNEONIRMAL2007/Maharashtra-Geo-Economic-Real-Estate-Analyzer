@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maharashtra Geo-Economic & Real Estate Analyzer</title>
+    <meta name="description" content="Search any district, taluka or village in Maharashtra to view ML-predicted real estate prices, employment data and business opportunity scores.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Animated Background Particles -->
+    <div class="bg-particles" id="particles"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">📊</span>
+                <div>
+                    <h1>Maharashtra Geo-Economic Analyzer</h1>
+                    <p class="subtitle">AI/ML Powered Real Estate & Business Intelligence</p>
+                </div>
+            </div>
+            <div class="header-stats" id="headerStats">
+                <div class="stat-chip"><span class="stat-num" id="totalDistricts">36</span> Districts</div>
+                <div class="stat-chip"><span class="stat-num" id="totalLocations">0</span> Locations</div>
+                <div class="stat-chip algo-chip">🤖 K-Means + Random Forest</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+
+        <!-- Search Section -->
+        <section class="search-section">
+            <div class="search-wrapper">
+                <div class="search-icon">🔍</div>
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    class="search-input" 
+                    placeholder="Search any District, Taluka, or Village... (e.g., Mumbai, Wagholi, Shirsoli)"
+                    autocomplete="off"
+                >
+                <button class="search-btn" id="searchBtn">Analyze</button>
+            </div>
+            <div class="search-suggestions" id="suggestions"></div>
+            <div class="quick-tags">
+                <span class="tag" data-search="Mumbai">Mumbai</span>
+                <span class="tag" data-search="Pune">Pune</span>
+                <span class="tag" data-search="Hinjawadi">Hinjawadi</span>
+                <span class="tag" data-search="Jalgaon">Jalgaon</span>
+                <span class="tag" data-search="Raver">Raver</span>
+                <span class="tag" data-search="Chhatrapati Sambhajinagar">Chhatrapati Sambhajinagar</span>
+                <span class="tag" data-search="Nagpur">Nagpur</span>
+                <span class="tag" data-search="Nashik">Nashik</span>
+                <span class="tag" data-search="Kolhapur">Kolhapur</span>
+                <span class="tag" data-search="Panvel">Panvel</span>
+            </div>
+        </section>
+
+        <!-- Results Dashboard (Hidden by default) -->
+        <section class="dashboard" id="dashboard" style="display: none;">
+
+            <!-- Location Header -->
+            <div class="location-header" id="locationHeader">
+                <div class="location-info">
+                    <h2 id="locationTitle">Loading...</h2>
+                    <p id="locationSubtitle" class="location-sub"></p>
+                </div>
+                <div class="opportunity-badge" id="opportunityBadge">
+                    <span id="opportunityText">—</span>
+                </div>
+            </div>
+
+            <!-- Price Cards -->
+            <div class="section-title">
+                <span class="section-icon">🏠</span>
+                <h3>Real Estate Average Prices</h3>
+            </div>
+            <div class="cards-row">
+                <div class="price-card card-1bhk">
+                    <div class="card-label">1 BHK</div>
+                    <div class="card-value" id="price1bhk">—</div>
+                    <div class="card-unit">Average Price</div>
+                    <div class="card-glow"></div>
+                </div>
+                <div class="price-card card-2bhk">
+                    <div class="card-label">2 BHK</div>
+                    <div class="card-value" id="price2bhk">—</div>
+                    <div class="card-unit">Average Price</div>
+                    <div class="card-glow"></div>
+                </div>
+                <div class="price-card card-3bhk">
+                    <div class="card-label">3 BHK</div>
+                    <div class="card-value" id="price3bhk">—</div>
+                    <div class="card-unit">Average Price</div>
+                    <div class="card-glow"></div>
+                </div>
+                <div class="price-card card-future">
+                    <div class="card-label">5-Yr Forecast 🔮</div>
+                    <div class="card-value" id="priceFuture">—</div>
+                    <div class="card-unit">Linear Regression</div>
+                    <div class="card-glow"></div>
+                </div>
+                <div class="price-card card-roi">
+                    <div class="card-label">Estimated ROI 💰</div>
+                    <div class="card-value" id="priceRoi">—</div>
+                    <div class="card-unit">5-Yr Capital Gain</div>
+                    <div class="card-glow"></div>
+                </div>
+            </div>
+
+            <!-- Employment Section -->
+            <div class="section-title">
+                <span class="section-icon">💼</span>
+                <h3>Employment & Economic Indicators</h3>
+            </div>
+            <div class="employment-row">
+                <div class="emp-card emp-positive">
+                    <div class="emp-icon">👔</div>
+                    <div class="emp-data">
+                        <div class="emp-label">Employment Rate</div>
+                        <div class="emp-value" id="empRate">—</div>
+                    </div>
+                    <div class="emp-bar-container">
+                        <div class="emp-bar emp-bar-green" id="empBar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="emp-card emp-negative">
+                    <div class="emp-icon">📉</div>
+                    <div class="emp-data">
+                        <div class="emp-label">Unemployment Rate</div>
+                        <div class="emp-value" id="unempRate">—</div>
+                    </div>
+                    <div class="emp-bar-container">
+                        <div class="emp-bar emp-bar-red" id="unempBar" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Price Comparison Chart -->
+            <div class="section-title">
+                <span class="section-icon">📈</span>
+                <h3>Price Comparison</h3>
+            </div>
+            <div class="chart-container">
+                <canvas id="priceChart"></canvas>
+            </div>
+
+            <!-- Hyper-Local Village Profile & Growth Scope -->
+            <div class="section-title">
+                <span class="section-icon">📍</span>
+                <h3>Locality Profile & Future Scope</h3>
+            </div>
+            <div class="cards-row" style="grid-template-columns: 1fr 1fr; margin-bottom: 2rem;">
+                <div class="price-card" style="text-align: left; padding: 1.25rem;">
+                    <div class="card-label" style="color: #60a5fa; font-size: 0.85rem; margin-bottom: 0.5rem;">Economic Profile & Sector</div>
+                    <div style="font-weight: 700; font-size: 1.05rem; color: #f8fafc; margin-bottom: 0.5rem;" id="localityType">—</div>
+                    <div style="color: #94a3b8; font-size: 0.88rem; line-height: 1.5;" id="villageInfo">—</div>
+                </div>
+                <div class="price-card" style="text-align: left; padding: 1.25rem;">
+                    <div class="card-label" style="color: #34d399; font-size: 0.85rem; margin-bottom: 0.5rem;">Commercial & Future Scope</div>
+                    <div style="font-weight: 700; font-size: 1.05rem; color: #34d399; margin-bottom: 0.5rem;">High Growth Potential</div>
+                    <div style="color: #94a3b8; font-size: 0.88rem; line-height: 1.5;" id="growthScope">—</div>
+                </div>
+            </div>
+
+            <!-- Business Suggestions -->
+            <div class="section-title">
+                <span class="section-icon">💡</span>
+                <h3>AI Business Suggestions</h3>
+            </div>
+            <div class="suggestions-grid" id="bizSuggestions"></div>
+
+            <!-- Data Table -->
+            <div class="section-title">
+                <span class="section-icon">📋</span>
+                <h3>Matching Locations</h3>
+                <span class="result-count" id="resultCount"></span>
+            </div>
+            <div class="table-wrapper">
+                <table class="data-table" id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>District</th>
+                            <th>Taluka</th>
+                            <th>Village</th>
+                            <th>Sector / Profile</th>
+                            <th>1 BHK (₹L)</th>
+                            <th>2 BHK (₹L)</th>
+                            <th>Emp %</th>
+                            <th>Opportunity</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Welcome State (shown when no search) -->
+        <section class="welcome-state" id="welcomeState">
+            <div class="welcome-icon">🏙️</div>
+            <h2>Explore Maharashtra's Economic Landscape</h2>
+            <p>Search for any of the <strong>36 districts</strong>, talukas, or villages to view ML-predicted real estate prices, employment data, and AI-powered business opportunity scores.</p>
+            <div class="welcome-features">
+                <div class="feature">
+                    <span class="feature-icon">🏠</span>
+                    <span>Property Prices</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">💼</span>
+                    <span>Employment Data</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">🤖</span>
+                    <span>ML Predictions</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">💡</span>
+                    <span>Business Ideas</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Error State -->
+        <section class="error-state" id="errorState" style="display: none;">
+            <div class="error-icon">🔍</div>
+            <h2 id="errorTitle">Location Not Found</h2>
+            <p id="errorMessage">Try searching for a valid Maharashtra district, taluka, or village name.</p>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>AIML Practical Project — K-Means Clustering & Random Forest Regression</p>
+        <p class="footer-sub">Dataset: 36 Districts • 150+ Talukas • 750+ Villages of Maharashtra</p>
+    </footer>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

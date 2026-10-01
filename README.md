@@ -50,13 +50,3 @@ graph TD
     class A,C,J file;
     class B,I data;
     class G,H model;
-
-🧠 Advanced Machine Learning Pipeline1. Feature Engineering & PreprocessingReal-world data requires rigorous cleaning before modeling:Statistical Outlier Removal: Implemented a standard deviation ($\sigma$) filter to remove extreme anomalies (data outside $\pm 2\sigma$). This prevents extreme outliers from distorting K-Means Euclidean distance centroids.Derived Metrics: Engineered new contextual features, including a Price Volatility Score (historical vs. current values) and a Price Jump Ratio (scaling factor between 1 BHK and 2 BHK).2. The Dual-Model Approach🟢 K-Means Clustering (Business Viability): Analyzes the scaled relationship between property costs and employment rates to automatically group locations into High Opportunity, Developing, or Saturated markets.📈 Linear Regression (Price Forecasting): Learns from historical price data and engineered volatility scores to forecast property appreciation 5 years into the future.🎯 Evaluation: Accuracy is verified using Mean Absolute Error (MAE) and $R^2$ Score.🚀 Installation & Execution1. PrerequisitesEnsure you have Python installed, then install the required dependencies:Bashpip install pandas numpy scikit-learn gradio matplotlib
-2. Run the PipelineExecute the architecture sequentially in your terminal:Bash# Step 1: Generate the simulated geographic & economic dataset
-python 1_data_generator.py
-
-# Step 2: Run outlier removal, feature engineering, and ML training
-python 2_ml_models.py
-
-# Step 3: Launch the interactive web dashboard
-python 3_app_ui.py

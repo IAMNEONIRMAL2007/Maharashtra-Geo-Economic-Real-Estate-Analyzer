@@ -1486,6 +1486,11 @@ with gr.Blocks(title="Maharashtra Geo-Economic & Real Estate Analyzer") as demo:
     search_btn.click(fn=search_location, inputs=search_input, outputs=outputs_list)
     search_input.submit(fn=search_location, inputs=search_input, outputs=outputs_list)
 
-print("Launching Gradio Web App...")
-demo.launch(inbrowser=True)
+# Export top-level ASGI/WSGI app instance
+app = demo.app
+application = app
+
+if __name__ == "__main__":
+    print("Launching Gradio Web App...")
+    demo.launch(inbrowser=True)
 

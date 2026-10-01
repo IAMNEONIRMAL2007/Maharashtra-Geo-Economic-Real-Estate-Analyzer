@@ -1,0 +1,7 @@
+# Exclude Python runtime files so Vercel serves the static web application (index.html, style.css, app.js)
+app.py
+*.ipynb
+*.xlsx
+scratch/
+outputs/
+__pycache__/

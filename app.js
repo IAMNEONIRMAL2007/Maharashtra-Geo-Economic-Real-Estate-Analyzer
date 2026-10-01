@@ -3184,17 +3184,17 @@ function renderPriceChart(bhk1, bhk2, bhk3) {
                 label: 'Average Price (Rs. Lakhs)',
                 data: [bhk1.toFixed(2), bhk2.toFixed(2), bhk3.toFixed(2)],
                 backgroundColor: [
-                    'rgba(59, 130, 246, 0.75)',
-                    'rgba(16, 185, 129, 0.75)',
-                    'rgba(249, 115, 22, 0.75)'
+                    '#93C5FD',
+                    '#3B82F6',
+                    '#1E3A8A'
                 ],
                 borderColor: [
-                    'rgba(59, 130, 246, 1)',
-                    'rgba(16, 185, 129, 1)',
-                    'rgba(249, 115, 22, 1)'
+                    '#93C5FD',
+                    '#3B82F6',
+                    '#1E3A8A'
                 ],
-                borderWidth: 2,
-                borderRadius: 8
+                borderWidth: 1,
+                borderRadius: 6
             }]
         },
         options: {
@@ -3211,12 +3211,12 @@ function renderPriceChart(bhk1, bhk2, bhk3) {
             scales: {
                 y: {
                     beginAtZero: true,
-                    grid: { color: 'rgba(255,255,255,0.05)' },
-                    ticks: { color: '#64748b', callback: v => `Rs. ${v}L` }
+                    grid: { color: 'rgba(69, 85, 108, 0.35)' },
+                    ticks: { color: '#90A1B9', callback: v => `Rs. ${v}L` }
                 },
                 x: {
                     grid: { display: false },
-                    ticks: { color: '#94a3b8', font: { weight: '600' } }
+                    ticks: { color: '#90A1B9', font: { weight: '600' } }
                 }
             }
         }
@@ -3274,7 +3274,7 @@ function renderTable(results) {
             <td><strong>${r.District}</strong></td>
             <td>${r.Taluka}</td>
             <td>${r.Village}</td>
-            <td><span style="font-size: 0.8rem; color: #60a5fa; font-weight: 500;">${r.LocalityType || 'Urban/Agro'}</span></td>
+            <td><span style="font-size: 0.8rem; color: #93C5FD; font-weight: 500;">${r.LocalityType || 'Urban/Agro'}</span></td>
             <td>Rs. ${r.BHK1.toFixed(2)}L</td>
             <td>Rs. ${r.BHK2.toFixed(2)}L</td>
             <td>${r.EmpRate.toFixed(1)}%</td>

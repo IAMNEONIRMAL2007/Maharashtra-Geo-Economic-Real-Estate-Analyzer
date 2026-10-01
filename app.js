@@ -3453,6 +3453,13 @@ function renderForecastChart(currentPrice, futurePrice) {
     const upperBounds = forecastData.map(v => v !== null ? +(v * 1.045).toFixed(2) : null);
     const lowerBounds = forecastData.map(v => v !== null ? +(v * 0.955).toFixed(2) : null);
 
+    const isLight = (document.documentElement.getAttribute('data-theme') || 'light') === 'light';
+    const gridColor = isLight ? 'rgba(0, 0, 0, 0.06)' : 'rgba(255, 255, 255, 0.04)';
+    const tickColor = isLight ? '#475569' : '#94A3B8';
+    const histColor = isLight ? '#0284C7' : '#06B6D4';
+    const predColor = isLight ? '#7C3AED' : '#8B5CF6';
+    const confFillColor = isLight ? 'rgba(124, 58, 237, 0.08)' : 'rgba(139, 92, 246, 0.06)';
+
     forecastChartInstance = new Chart(ctx, {
         type: 'line',
         data: {
@@ -3461,29 +3468,29 @@ function renderForecastChart(currentPrice, futurePrice) {
                 {
                     label: 'Historical Baseline (2021–2026)',
                     data: historicalData,
-                    borderColor: '#06B6D4',
-                    backgroundColor: 'rgba(6, 182, 212, 0.08)',
+                    borderColor: histColor,
+                    backgroundColor: isLight ? 'rgba(2, 132, 199, 0.08)' : 'rgba(6, 182, 212, 0.08)',
                     borderWidth: 2.5,
                     pointRadius: 3,
-                    pointBackgroundColor: '#06B6D4',
+                    pointBackgroundColor: histColor,
                     tension: 0.3
                 },
                 {
                     label: 'ML Forecast Projection (2026–2031)',
                     data: forecastData,
-                    borderColor: '#8B5CF6',
-                    backgroundColor: 'rgba(139, 92, 246, 0.12)',
+                    borderColor: predColor,
+                    backgroundColor: confFillColor,
                     borderWidth: 3,
                     borderDash: [5, 4],
                     pointRadius: 4,
-                    pointBackgroundColor: '#8B5CF6',
+                    pointBackgroundColor: predColor,
                     tension: 0.3
                 },
                 {
                     label: 'Confidence Upper (+4.5%)',
                     data: upperBounds,
                     borderColor: 'transparent',
-                    backgroundColor: 'rgba(139, 92, 246, 0.06)',
+                    backgroundColor: confFillColor,
                     fill: '+1',
                     pointRadius: 0
                 },
@@ -3491,7 +3498,7 @@ function renderForecastChart(currentPrice, futurePrice) {
                     label: 'Confidence Lower (-4.5%)',
                     data: lowerBounds,
                     borderColor: 'transparent',
-                    backgroundColor: 'rgba(139, 92, 246, 0.06)',
+                    backgroundColor: confFillColor,
                     fill: false,
                     pointRadius: 0
                 }
@@ -3510,15 +3517,15 @@ function renderForecastChart(currentPrice, futurePrice) {
                     position: 'top',
                     labels: {
                         boxWidth: 12,
-                        color: '#94A3B8',
+                        color: tickColor,
                         font: { size: 10, family: 'Plus Jakarta Sans', weight: '600' },
                         filter: item => !item.text.includes('Confidence')
                     }
                 },
                 tooltip: {
-                    backgroundColor: 'rgba(14, 22, 37, 0.95)',
+                    backgroundColor: '#0F172A',
                     titleColor: '#FFFFFF',
-                    bodyColor: '#94A3B8',
+                    bodyColor: '#E2E8F0',
                     borderColor: 'rgba(255, 255, 255, 0.1)',
                     borderWidth: 1,
                     padding: 10,
@@ -3529,13 +3536,13 @@ function renderForecastChart(currentPrice, futurePrice) {
             },
             scales: {
                 x: {
-                    grid: { color: 'rgba(255, 255, 255, 0.04)' },
-                    ticks: { color: '#94A3B8', font: { size: 10 } }
+                    grid: { color: gridColor },
+                    ticks: { color: tickColor, font: { size: 10 } }
                 },
                 y: {
-                    grid: { color: 'rgba(255, 255, 255, 0.04)' },
+                    grid: { color: gridColor },
                     ticks: {
-                        color: '#94A3B8',
+                        color: tickColor,
                         font: { size: 10 },
                         callback: v => `Rs. ${v}L`
                     }
@@ -4251,6 +4258,22 @@ const btnBackToOverview = document.getElementById('btnBackToOverview');
 if (btnBackToOverview) {
     btnBackToOverview.addEventListener('click', () => performSearch('Pune'));
 }
+
+// Light / Dark Theme Toggle
+const themeToggleBtn = document.getElementById('themeToggleBtn');
+if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', nextTheme);
+        themeToggleBtn.innerHTML = nextTheme === 'light' ? '☀️ Light' : '🌙 Dark';
+        try { localStorage.setItem('theme', nextTheme); } catch(e) {}
+        if (currentActiveLocation) {
+            performSearch(currentActiveLocation.Village);
+        }
+    });
+}
+
 
 // ============================================================
 // INITIALIZATION ON PAGE LOAD

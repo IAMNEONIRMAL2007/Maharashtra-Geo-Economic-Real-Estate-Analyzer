@@ -3453,12 +3453,11 @@ function renderForecastChart(currentPrice, futurePrice) {
     const upperBounds = forecastData.map(v => v !== null ? +(v * 1.045).toFixed(2) : null);
     const lowerBounds = forecastData.map(v => v !== null ? +(v * 0.955).toFixed(2) : null);
 
-    const isLight = (document.documentElement.getAttribute('data-theme') || 'light') === 'light';
-    const gridColor = isLight ? 'rgba(0, 0, 0, 0.06)' : 'rgba(255, 255, 255, 0.04)';
-    const tickColor = isLight ? '#475569' : '#94A3B8';
-    const histColor = isLight ? '#0284C7' : '#06B6D4';
-    const predColor = isLight ? '#7C3AED' : '#8B5CF6';
-    const confFillColor = isLight ? 'rgba(124, 58, 237, 0.08)' : 'rgba(139, 92, 246, 0.06)';
+    const gridColor = 'rgba(0, 0, 0, 0.06)';
+    const tickColor = '#475569';
+    const histColor = '#0284C7';
+    const predColor = '#7C3AED';
+    const confFillColor = 'rgba(124, 58, 237, 0.08)';
 
     forecastChartInstance = new Chart(ctx, {
         type: 'line',
@@ -3469,7 +3468,7 @@ function renderForecastChart(currentPrice, futurePrice) {
                     label: 'Historical Baseline (2021–2026)',
                     data: historicalData,
                     borderColor: histColor,
-                    backgroundColor: isLight ? 'rgba(2, 132, 199, 0.08)' : 'rgba(6, 182, 212, 0.08)',
+                    backgroundColor: 'rgba(2, 132, 199, 0.08)',
                     borderWidth: 2.5,
                     pointRadius: 3,
                     pointBackgroundColor: histColor,
@@ -4259,20 +4258,6 @@ if (btnBackToOverview) {
     btnBackToOverview.addEventListener('click', () => performSearch('Pune'));
 }
 
-// Light / Dark Theme Toggle
-const themeToggleBtn = document.getElementById('themeToggleBtn');
-if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-        const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', nextTheme);
-        themeToggleBtn.innerHTML = nextTheme === 'light' ? '☀️ Light' : '🌙 Dark';
-        try { localStorage.setItem('theme', nextTheme); } catch(e) {}
-        if (currentActiveLocation) {
-            performSearch(currentActiveLocation.Village);
-        }
-    });
-}
 
 
 // ============================================================

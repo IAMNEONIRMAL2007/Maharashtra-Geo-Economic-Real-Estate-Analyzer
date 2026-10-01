@@ -4,8 +4,8 @@
    Palette: Crisp White (#FFFFFF) + Slate Canvas (#F8FAFC) + Royal Blue / Cyan / AI Purple
    ============================================================ */
 
-:root, [data-theme="light"] {
-    /* 2026 Light / White Spatial Intelligence Palette */
+:root {
+    /* Pure White / Light Spatial Intelligence Palette (Permanent) */
     --bg-canvas: #F8FAFC;
     --bg-card: #FFFFFF;
     --bg-card-hover: #F1F5F9;
@@ -49,25 +49,6 @@
     --radius-sm: 12px;
     --radius-xs: 8px;
     --transition-app: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Optional Dark Mode Token Override */
-[data-theme="dark"] {
-    --bg-canvas: #070B14;
-    --bg-card: #0E1625;
-    --bg-card-hover: #131E33;
-    --bg-card-subtle: rgba(14, 22, 37, 0.7);
-    --glass-bg: rgba(14, 22, 37, 0.85);
-    --glass-bg-hover: rgba(19, 30, 51, 0.95);
-    --glass-border: rgba(255, 255, 255, 0.08);
-    --glass-border-hover: rgba(59, 130, 246, 0.35);
-    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.36);
-    --glass-shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.5);
-    --text-primary: #F8FAFC;
-    --text-secondary: #94A3B8;
-    --text-muted: #64748B;
-    --accent-blue-subtle: rgba(37, 99, 235, 0.15);
-    --accent-purple-subtle: rgba(124, 58, 237, 0.15);
 }
 
 * {

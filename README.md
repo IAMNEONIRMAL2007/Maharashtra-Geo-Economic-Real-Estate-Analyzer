@@ -100,7 +100,7 @@ Identifies hidden latent patterns across property prices, commercial velocity, a
 ├── app.py                                   # Standalone Gradio Web Application
 ├── app.js                                   # Offline Dashboard JavaScript Logic & Charts
 ├── index.html                               # Offline Glassmorphism Dashboard
-├── style.css                                # Design System (Dark Mode, Glassmorphism)
+├── style.css                                # Design System (White Mode, Glassmorphism)
 ├── maharashtra_geo_data_dict.py             # Complete 36-District & 340-Taluka Dictionary (1,701 records)
 ├── maharashtra_data.csv                     # Raw Geo-Economic Dataset (1,701 records)
 ├── maharashtra_data.xlsx                    # Raw Dataset in Excel Format

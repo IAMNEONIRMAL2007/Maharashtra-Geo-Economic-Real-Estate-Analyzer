@@ -1,0 +1,9 @@
+{
+  "connector": {
+    "name": "local",
+    "options": {}
+  },
+  "hints": {
+    "compat-api/css": "off"
+  }
+}

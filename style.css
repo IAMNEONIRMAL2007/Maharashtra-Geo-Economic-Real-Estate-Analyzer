@@ -299,6 +299,8 @@ body {
     padding: 3px 7px;
     border-radius: 4px;
     -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
 }
 
@@ -385,6 +387,8 @@ body {
     cursor: pointer;
     transition: var(--transition);
     -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
 }
 

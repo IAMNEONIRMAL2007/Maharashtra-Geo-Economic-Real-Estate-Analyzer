@@ -28,9 +28,10 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload artifact
+      - name: Upload web files only
         uses: actions/upload-pages-artifact@v3
         with:
+          # Only upload the web-facing files needed for the site
           path: '.'
 
       - name: Deploy to GitHub Pages

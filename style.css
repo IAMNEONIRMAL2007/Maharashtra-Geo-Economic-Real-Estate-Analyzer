@@ -8,34 +8,27 @@
 
 :root {
     --bg:           #f5f5f4;
-    --bg-card:      #ffffff;
+    --bg-card:      #fff;
     --border:       #e4e4e7;
     --border-focus: #a1a1aa;
-
     --text-1:   #18181b;
     --text-2:   #52525b;
     --text-3:   #a1a1aa;
-
     --blue:         #2563eb;
     --blue-light:   #eff6ff;
     --blue-border:  #bfdbfe;
-
     --green:        #16a34a;
     --green-light:  #f0fdf4;
     --green-border: #bbf7d0;
-
     --amber:        #b45309;
     --amber-light:  #fffbeb;
     --amber-border: #fde68a;
-
     --red:          #dc2626;
     --red-light:    #fff1f2;
     --red-border:   #fecdd3;
-
     --purple:       #7c3aed;
     --purple-light: #f5f3ff;
     --purple-border:#ddd6fe;
-
     --radius-sm:  6px;
     --radius-md:  10px;
     --radius-lg:  14px;
@@ -52,7 +45,7 @@
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background-color: var(--bg);
     color: var(--text-1);
     font-size: 14px;
@@ -71,12 +64,12 @@ body {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 4px rgb(0 0 0 / 5%);
     transition: box-shadow var(--transition);
 }
 
 .glass-panel:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
 }
 
 /* ============================================================
@@ -240,7 +233,7 @@ body {
 /* Remove gradient text — use plain color */
 .hero-title .gradient-text {
     background: none;
-    -webkit-background-clip: unset;
+    background-clip: unset;
     -webkit-text-fill-color: unset;
     color: var(--blue);
 }
@@ -263,7 +256,7 @@ body {
     border-radius: var(--radius-md);
     background: var(--bg-card);
     border: 1px solid var(--border);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 1px 4px rgb(0 0 0 / 6%);
     max-width: 680px;
     margin: 0 auto;
     transition: border-color var(--transition), box-shadow var(--transition);
@@ -271,7 +264,7 @@ body {
 
 .search-wrapper:focus-within {
     border-color: var(--blue);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    box-shadow: 0 0 0 3px rgb(37 99 235 / 10%);
 }
 
 .search-icon {
@@ -310,7 +303,7 @@ body {
 
 .search-btn {
     background: var(--blue);
-    color: #ffffff;
+    color: #fff;
     border: none;
     padding: 8px 20px;
     border-radius: var(--radius-sm);
@@ -344,7 +337,7 @@ body {
     border-radius: var(--radius-md);
     max-height: 260px;
     overflow-y: auto;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 24px rgb(0 0 0 / 10%);
 }
 
 .suggestion-item {
@@ -438,7 +431,7 @@ body {
     gap: 12px;
 }
 
-@media (min-width: 640px) {
+@media (width >= 640px) {
     .kpi-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
@@ -565,7 +558,7 @@ body {
     gap: 20px;
 }
 
-@media (min-width: 900px) {
+@media (width >= 900px) {
     .intel-profile-grid {
         grid-template-columns: 200px 1fr;
     }
@@ -594,7 +587,7 @@ body {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: #ffffff;
+    background: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -632,7 +625,7 @@ body {
     gap: 12px;
 }
 
-@media (max-width: 640px) {
+@media (width <= 640px) {
     .intel-subscores { grid-template-columns: 1fr 1fr; }
     .intel-index-box { border-right: none; padding-right: 0; }
 }
@@ -686,7 +679,7 @@ body {
     border-top: 1px solid var(--border);
 }
 
-@media (min-width: 640px) {
+@media (width >= 640px) {
     .quick-specs-row { grid-template-columns: repeat(4, 1fr); }
 }
 
@@ -720,7 +713,7 @@ body {
     margin-bottom: 16px;
 }
 
-@media (min-width: 992px) {
+@media (width >= 992px) {
     .bento-grid { grid-template-columns: 1.6fr 1fr; }
 }
 
@@ -901,7 +894,7 @@ body {
 
 .bhk-toggle-btn.active {
     background: var(--blue);
-    color: #ffffff;
+    color: #fff;
 }
 
 .bhk-bar-list {
@@ -1062,7 +1055,7 @@ body {
     gap: 20px;
 }
 
-@media (min-width: 850px) {
+@media (width >= 850px) {
     .kmeans-body { grid-template-columns: 1.2fr 1fr; }
 }
 
@@ -1186,11 +1179,11 @@ body {
     gap: 10px;
 }
 
-@media (min-width: 640px) {
+@media (width >= 640px) {
     .suggestions-grid { grid-template-columns: 1fr 1fr; }
 }
 
-@media (min-width: 1000px) {
+@media (width >= 1000px) {
     .suggestions-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
@@ -1207,7 +1200,7 @@ body {
 
 .biz-card:hover {
     border-color: #a1a1aa;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
 }
 
 .biz-card .biz-icon {
@@ -1381,7 +1374,7 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.35);
+    background: rgb(0 0 0 / 35%);
     backdrop-filter: blur(4px);
     z-index: 2000;
     display: none;
@@ -1396,7 +1389,7 @@ body {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 12px 40px rgb(0 0 0 / 15%);
     width: 100%;
     max-width: 800px;
     max-height: 90vh;
@@ -1464,7 +1457,7 @@ body {
 
 .compare-select:focus {
     border-color: var(--blue);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    box-shadow: 0 0 0 3px rgb(37 99 235 / 10%);
 }
 
 .compare-bars-table {
@@ -1540,7 +1533,7 @@ body {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 12px 40px rgb(0 0 0 / 15%);
     width: 100%;
     max-width: 580px;
     overflow: hidden;
@@ -1609,14 +1602,14 @@ body {
     right: 22px;
     z-index: 1500;
     background: var(--blue);
-    color: #ffffff;
+    color: #fff;
     border: none;
     padding: 10px 18px;
     border-radius: 20px;
     font-size: 0.84rem;
     font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    box-shadow: 0 4px 12px rgb(37 99 235 / 30%);
     display: flex;
     align-items: center;
     gap: 7px;
@@ -1626,7 +1619,7 @@ body {
 
 .floating-geoai-btn:hover {
     background: #1d4ed8;
-    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
+    box-shadow: 0 6px 18px rgb(37 99 235 / 40%);
 }
 
 .geoai-drawer {
@@ -1638,7 +1631,7 @@ body {
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.14);
+    box-shadow: 0 8px 32px rgb(0 0 0 / 14%);
     z-index: 1500;
     display: none;
     flex-direction: column;
@@ -1687,7 +1680,7 @@ body {
 
 .user-bubble {
     background: var(--blue);
-    color: #ffffff;
+    color: #fff;
     padding: 8px 12px;
     border-radius: var(--radius-md);
     align-self: flex-end;
@@ -1741,7 +1734,7 @@ body {
 
 .geoai-send-btn {
     background: var(--blue);
-    color: #ffffff;
+    color: #fff;
     border: none;
     padding: 7px 12px;
     border-radius: var(--radius-sm);
@@ -1798,7 +1791,7 @@ body {
 /* ============================================================
    17. RESPONSIVE
    ============================================================ */
-@media (max-width: 768px) {
+@media (width <= 768px) {
     .header-content      { height: auto; padding: 12px 0; }
     .hero-title          { font-size: 1.5rem; }
     .search-wrapper      { flex-direction: column; padding: 10px; }
@@ -1810,7 +1803,7 @@ body {
     .map-control-bar     { flex-direction: column; align-items: flex-start; }
 }
 
-@media (max-width: 480px) {
+@media (width <= 480px) {
     .main-container { padding: 20px 14px 48px; }
     .intel-subscores { grid-template-columns: 1fr; }
     .forecast-kpis   { grid-template-columns: 1fr; }
@@ -1821,8 +1814,8 @@ body {
    ============================================================ */
 .ai-loading-overlay {
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(255, 255, 255, 0.9);
+    inset: 0;
+    background: rgb(255 255 255 / 90%);
     backdrop-filter: blur(4px);
     z-index: 9999;
     display: none;
@@ -1841,7 +1834,7 @@ body {
     background: #fff;
     padding: 32px 40px;
     border-radius: var(--radius-lg);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    box-shadow: 0 10px 40px rgb(0 0 0 / 8%);
     border: 1px solid var(--border);
     text-align: center;
     max-width: 400px;

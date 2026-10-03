@@ -11,8 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Leaflet & Chart.js -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Chart.js -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -123,41 +122,7 @@
             </div>
         </section>
 
-        <!-- 3. High-Priority Interactive Map Section -->
-        <section class="map-section" id="mapSection">
-            <div class="map-control-bar glass-panel">
-                <div class="map-title-group">
-                    <span class="panel-icon">🗺️</span>
-                    <div>
-                        <h3>EXPLORE MAHARASHTRA</h3>
-                        <span class="map-title-sub">Interactive Geospatial Topology & Multi-Layer Intelligence</span>
-                    </div>
-                </div>
-                <div class="map-layer-pills" id="mapLayerPills">
-                    <button class="map-layer-btn active" data-layer="property">🏷️ Property Price</button>
-                    <button class="map-layer-btn" data-layer="employment">💼 Employment</button>
-                    <button class="map-layer-btn" data-layer="business">💡 Business Opportunity</button>
-                    <button class="map-layer-btn" data-layer="growth">📈 5-Year Growth</button>
-                    <button class="map-layer-btn" data-layer="clusters">🧬 K-Means Clusters</button>
-                </div>
-                <div class="map-actions">
-                    <button class="map-btn-action" id="resetMapBtn" title="Reset map to full Maharashtra view">⌖ Focus Maharashtra</button>
-                </div>
-            </div>
 
-            <div class="map-container glass-panel">
-                <div id="map"></div>
-                <!-- Dynamic Map Legend -->
-                <div class="map-legend-overlay" id="mapLegend">
-                    <div class="map-legend-title" id="legendTitle">Property Price Benchmark</div>
-                    <div class="legend-scale">
-                        <span id="legendMin">₹18L</span>
-                        <div class="legend-bar" id="legendBar"></div>
-                        <span id="legendMax">₹180L</span>
-                    </div>
-                </div>
-            </div>
-        </section>
 
         <!-- 4. Location Intelligence Dossier Section -->
         <section class="dashboard" id="dashboard">
@@ -619,8 +584,7 @@
         <p class="footer-sub">Designed for Institutional Investors, Urban Researchers & Strategic Homebuyers</p>
     </footer>
 
-    <!-- Leaflet & Chart.js CDN -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     <script src="app.js"></script>
 </body>

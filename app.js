@@ -3208,7 +3208,7 @@ document.addEventListener('click', (e) => {
 // ============================================================
 // MAIN PERFORM SEARCH & LOCATION INTELLIGENCE DOSSIER
 // ============================================================
-function performSearch(query) {
+async function performSearch(query) {
     if (suggestionsDiv) suggestionsDiv.innerHTML = '';
     const results = searchData(query);
 
@@ -3223,6 +3223,40 @@ function performSearch(query) {
     }
 
     if (errorState) errorState.style.display = 'none';
+    if (dashboard) dashboard.style.display = 'none';
+
+    // ----------------------------------------------------
+    // ALGORITHM SIMULATION (LOADING OVERLAY)
+    // ----------------------------------------------------
+    const overlay = document.getElementById('aiLoadingOverlay');
+    const logs = document.querySelector('.loading-logs');
+    const progress = document.getElementById('aiLoadingProgress');
+    
+    if (overlay && logs && progress) {
+        overlay.classList.add('active');
+        progress.style.width = '10%';
+        logs.innerHTML = '<div class="log-line">→ Initializing ML environment...</div>';
+
+        await new Promise(r => setTimeout(r, 600));
+        progress.style.width = '30%';
+        logs.innerHTML += '<div class="log-line">→ Loading historical location data...</div>';
+
+        await new Promise(r => setTimeout(r, 800));
+        progress.style.width = '60%';
+        logs.innerHTML += '<div class="log-line">→ Running Random Forest Regression...</div>';
+
+        await new Promise(r => setTimeout(r, 800));
+        progress.style.width = '85%';
+        logs.innerHTML += '<div class="log-line">→ Applying K-Means Cluster topologies...</div>';
+
+        await new Promise(r => setTimeout(r, 600));
+        progress.style.width = '100%';
+        logs.innerHTML += '<div class="log-line">→ Finalizing intelligence dossier...</div>';
+
+        await new Promise(r => setTimeout(r, 400));
+        overlay.classList.remove('active');
+    }
+
     if (dashboard) dashboard.style.display = 'block';
 
     currentResults = results;
@@ -3356,9 +3390,6 @@ function performSearch(query) {
 
     // Regional Directory Table
     renderTable(results);
-
-    // Center Map on this location
-    highlightLocationOnMap(topItem.District, topItem.Village);
 }
 
 // ============================================================
@@ -3517,7 +3548,7 @@ function renderForecastChart(currentPrice, futurePrice) {
                     labels: {
                         boxWidth: 12,
                         color: tickColor,
-                        font: { size: 10, family: 'Plus Jakarta Sans', weight: '600' },
+                        font: { size: 11, family: 'Inter', weight: '500' },
                         filter: item => !item.text.includes('Confidence')
                     }
                 },

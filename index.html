@@ -584,6 +584,24 @@
         <p class="footer-sub">Designed for Institutional Investors, Urban Researchers & Strategic Homebuyers</p>
     </footer>
 
+    <!-- AI Analysis Loading Overlay -->
+    <div id="aiLoadingOverlay" class="ai-loading-overlay">
+        <div class="ai-loading-card">
+            <div class="spinner-container">
+                <div class="algorithm-spinner"></div>
+            </div>
+            <h3 id="aiLoadingTitle">Initializing ML Models</h3>
+            <p id="aiLoadingSubtitle">Preparing to analyze data...</p>
+            <div class="loading-progress-bar">
+                <div id="aiLoadingProgress" class="loading-progress-fill"></div>
+            </div>
+            <div class="loading-logs">
+                <div class="log-line">→ Loading dataset: 1,701 locations</div>
+                <div class="log-line">→ Pre-processing regional economic indicators</div>
+            </div>
+        </div>
+    </div>
+
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     <script src="app.js"></script>

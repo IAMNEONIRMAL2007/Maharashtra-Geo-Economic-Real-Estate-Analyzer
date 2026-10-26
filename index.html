@@ -45,55 +45,68 @@
     <!-- Main Command Center Canvas -->
     <main class="main-container">
 
-        <!-- 1. Hero & Command Search Viewport -->
-        <section class="hero-section">
-            <div class="hero-eyebrow">
-                <span>⚡ SPATIAL INTELLIGENCE PLATFORM</span>
-                <span>•</span>
-                <span>36 DISTRICTS</span>
+        <!-- ============================================================
+             COMPARTMENT 1: STICKY SEARCH & COMMAND COMPARTMENT
+             ============================================================ -->
+        <section class="search-compartment glass-panel" id="searchCompartment">
+            <!-- Full Hero Viewport (Smoothly collapses into sticky command bar once searched) -->
+            <div class="hero-collapsible" id="heroCollapsible">
+                <div class="hero-eyebrow">
+                    <span>⚡ SPATIAL INTELLIGENCE PLATFORM</span>
+                    <span>•</span>
+                    <span>36 DISTRICTS</span>
+                </div>
+                <h2 class="hero-title">
+                    UNDERSTAND<br>
+                    <span class="gradient-text">MAHARASHTRA BEFORE</span><br>
+                    YOU INVEST.
+                </h2>
+                <p class="hero-subtitle">
+                    AI-powered property, employment, and economic intelligence across 1,701 locations.
+                </p>
             </div>
-            <h2 class="hero-title">
-                UNDERSTAND<br>
-                <span class="gradient-text">MAHARASHTRA BEFORE</span><br>
-                YOU INVEST.
-            </h2>
-            <p class="hero-subtitle">
-                AI-powered property, employment, and economic intelligence across 1,701 locations.
-            </p>
 
-            <!-- Command Search Bar -->
-            <div class="search-wrapper glass-panel">
-                <div class="search-icon">🔍</div>
-                <input 
-                    type="text" 
-                    id="searchInput" 
-                    class="search-input" 
-                    placeholder="Search district, taluka, village or locality... (e.g. Pune, Wagholi, Mumbai, Hinjawadi)"
-                    autocomplete="off"
-                >
-                <span class="search-kbd-hint">⌘K</span>
-                <button class="search-btn" id="searchBtn">Analyze</button>
+            <!-- Sticky Command Bar (Search Bar + Statewide Stats Toggle) -->
+            <div class="command-bar-row">
+                <div class="search-wrapper glass-panel">
+                    <div class="search-icon">🔍</div>
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        class="search-input" 
+                        placeholder="Search district, taluka, village or locality... (e.g. Pune, Wagholi, Mumbai, Hinjawadi)"
+                        autocomplete="off"
+                    >
+                    <span class="search-kbd-hint">⌘K</span>
+                    <button class="search-btn" id="searchBtn">Analyze</button>
+                </div>
+                <button class="btn-statewide-toggle" id="btnToggleStatewideStats" title="Toggle statewide summary stats banner">
+                    <span>🌐</span>
+                    <span>Statewide Stats</span>
+                </button>
             </div>
             
             <div class="search-suggestions" id="suggestions"></div>
 
-            <!-- Quick Access Chips -->
-            <div class="quick-tags">
-                <span class="tag" data-search="Mumbai">Mumbai</span>
-                <span class="tag" data-search="Pune">Pune</span>
-                <span class="tag" data-search="Nashik">Nashik</span>
-                <span class="tag" data-search="Nagpur">Nagpur</span>
-                <span class="tag" data-search="Hinjawadi">Hinjawadi</span>
-                <span class="tag" data-search="Wagholi">Wagholi</span>
-                <span class="tag" data-search="Panvel">Panvel</span>
-                <span class="tag" data-search="Chhatrapati Sambhajinagar">Chhatrapati Sambhajinagar</span>
-                <span class="tag" data-search="Kolhapur">Kolhapur</span>
-                <span class="tag" data-search="Jalgaon">Jalgaon</span>
+            <!-- Horizontal Scrollable Quick Access City Chips -->
+            <div class="quick-tags-scroll-wrap">
+                <div class="quick-tags" id="quickTags">
+                    <span class="tag" data-search="Mumbai">Mumbai</span>
+                    <span class="tag" data-search="Pune">Pune</span>
+                    <span class="tag" data-search="Nashik">Nashik</span>
+                    <span class="tag" data-search="Nagpur">Nagpur</span>
+                    <span class="tag" data-search="Hinjawadi">Hinjawadi</span>
+                    <span class="tag" data-search="Wagholi">Wagholi</span>
+                    <span class="tag" data-search="Panvel">Panvel</span>
+                    <span class="tag" data-search="Chhatrapati Sambhajinagar">Chhatrapati Sambhajinagar</span>
+                    <span class="tag" data-search="Kolhapur">Kolhapur</span>
+                    <span class="tag" data-search="Jalgaon">Jalgaon</span>
+                </div>
             </div>
         </section>
 
-        <!-- 2. Live Intelligence KPI Strip -->
-        <section class="live-intel-strip glass-panel">
+        <!-- 2. Live Intelligence KPI Strip (Collapsible via Statewide Stats button) -->
+        <section class="live-intel-strip glass-panel" id="liveIntelStrip">
             <div class="live-intel-header">
                 <span class="live-intel-tag">● LIVE STATEWIDE INTELLIGENCE</span>
                 <span class="live-intel-status">Monitoring 36 Districts • Real-Time Spatial Synthesis</span>
@@ -122,65 +135,34 @@
             </div>
         </section>
 
+        <!-- ============================================================
+             MAIN RESULTS WORKSPACE: 12-COLUMN SPLIT GRID
+             ============================================================ -->
+        <section class="dashboard workspace-grid" id="dashboard">
 
+            <!-- --------------------------------------------------------
+                 COMPARTMENT 2: PINNED LOCATION DOSSIER SIDEBAR (4 COLUMNS)
+                 -------------------------------------------------------- -->
+            <aside class="dossier-sidebar-compartment">
 
-        <!-- 4. Location Intelligence Dossier Section -->
-        <section class="dashboard" id="dashboard">
-
-            <!-- 📐 STEP-BY-STEP CALCULATION ENGINE & MATHEMATICAL DERIVATION BREAKDOWN -->
-            <div class="calc-breakdown-card" id="calcBreakdownCard">
-                <div class="calc-header" onclick="toggleCalcDetails()">
-                    <div class="calc-header-left">
-                        <div>
-                            <h3 class="calc-title">Step-by-Step Calculation Engine</h3>
-                            <span class="calc-subtitle">All mathematical derivations, formulas & aggregations evaluated before output generation</span>
+                <!-- Location Dossier Header Bar -->
+                <div class="glass-panel location-header" id="locationHeader">
+                    <div class="location-info">
+                        <span class="location-eyebrow">GEOSPATIAL ECONOMIC DOSSIER • LOCATION INTELLIGENCE</span>
+                        <h2 id="locationTitle">Wagholi</h2>
+                        <p id="locationSubtitle" class="location-sub">Haveli Taluka, Pune District • Maharashtra</p>
+                    </div>
+                    <div class="header-badges">
+                        <div class="opportunity-badge high" id="opportunityBadge">
+                            <span id="opportunityText">High Opportunity</span>
                         </div>
                     </div>
-                    <div class="calc-header-right">
-                        <span class="calc-status-badge">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="20 6 9 17 4 12"></polyline>
-                            </svg>
-                            Evaluated Live
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 3px;">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </span>
-                        <span id="calcToggleIcon" class="calc-toggle-arrow">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="18 15 12 9 6 15"></polyline>
-                            </svg>
-                        </span>
-                    </div>
                 </div>
-                <div id="calcDetailsBody" class="calc-body">
-                    <!-- Populated dynamically by app.js before showing output -->
-                </div>
-            </div>
 
-            <!-- Location Dossier Header Bar -->
-            <div class="glass-panel location-header" id="locationHeader">
-                <div class="location-info">
-                    <span class="location-eyebrow">GEOSPATIAL ECONOMIC DOSSIER • LOCATION INTELLIGENCE</span>
-                    <h2 id="locationTitle">Wagholi</h2>
-                    <p id="locationSubtitle" class="location-sub">Haveli Taluka, Pune District • Maharashtra</p>
-                </div>
-                <div class="header-badges">
-                    <div class="opportunity-badge high" id="opportunityBadge">
-                        <span id="opportunityText">High Opportunity</span>
-                    </div>
-                    <button class="btn-header-compare auto-style-1" id="compareThisBtn" >
-                        VS Compare This
-                    </button>
-                </div>
-            </div>
-
-            <!-- AI Location Profile & Composite Intelligence Index -->
-            <div class="glass-panel intel-profile-card">
-                <div class="intel-profile-grid">
+                <!-- AI Location Profile & Composite Intelligence Index -->
+                <div class="glass-panel intel-profile-card">
                     <div class="intel-index-box">
-                        <div class="index-circle auto-style-2" id="indexCircle" >
+                        <div class="index-circle auto-style-2" id="indexCircle">
                             <div class="index-circle-inner">
                                 <span class="index-num" id="intelIndex">87</span>
                                 <span class="index-denom">/100</span>
@@ -195,363 +177,456 @@
                         <div class="subscore-card">
                             <span class="subscore-label">Property</span>
                             <span class="subscore-val" id="intelProperty">84</span>
-                            <div class="subscore-bar-bg"><div class="subscore-bar-fill auto-style-3" id="intelPropertyBar" ></div></div>
+                            <div class="subscore-bar-bg"><div class="subscore-bar-fill auto-style-3" id="intelPropertyBar"></div></div>
                         </div>
                         <div class="subscore-card">
                             <span class="subscore-label">Employment</span>
                             <span class="subscore-val" id="intelEmployment">81</span>
-                            <div class="subscore-bar-bg"><div class="subscore-bar-fill auto-style-4" id="intelEmploymentBar" ></div></div>
+                            <div class="subscore-bar-bg"><div class="subscore-bar-fill auto-style-4" id="intelEmploymentBar"></div></div>
                         </div>
                         <div class="subscore-card">
                             <span class="subscore-label">Business</span>
                             <span class="subscore-val" id="intelBusiness">92</span>
-                            <div class="subscore-bar-bg"><div class="subscore-bar-fill auto-style-5" id="intelBusinessBar" ></div></div>
+                            <div class="subscore-bar-bg"><div class="subscore-bar-fill auto-style-5" id="intelBusinessBar"></div></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Quick Specs Ribbon -->
-                <div class="quick-specs-row">
-                    <div class="spec-item">
-                        <span class="spec-caption">Market Benchmark</span>
-                        <span class="spec-value" id="dossierMarketPrice">₹8,420 / sq.ft</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-caption">5-Year Target Model</span>
-                        <span class="spec-value" id="dossierModelPrice">₹12,850 / sq.ft</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-caption">Workforce Rate</span>
-                        <span class="spec-value" id="dossierEmpRate">82.4%</span>
-                    </div>
-                    <div class="spec-item">
-                        <span class="spec-caption">Economic Cluster</span>
-                        <span class="spec-value" id="dossierCluster">Growth Corridor</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 5. Primary Intelligence Bento Grid -->
-            <div class="bento-grid">
-                
-                <!-- 🤖 THE ML FORECAST HERO TILE -->
-                <div class="glass-panel bento-hero">
-                    <div class="hero-top-row">
-                        <span class="hero-badge">🤖 AI MARKET FORECAST 2026—2031</span>
-                        <span class="hero-horizon">5-YEAR LINEAR REGRESSION HORIZON</span>
-                    </div>
-
-                    <!-- Forecast Line Chart with Historical Baseline + Forecast Confidence -->
-                    <div class="hero-chart-container">
-                        <canvas id="forecastChart"></canvas>
-                    </div>
-
-                    <div class="forecast-kpis">
-                        <div class="forecast-kpi-card">
-                            <span class="kpi-label">Current Entry Benchmark (2026)</span>
-                            <div class="kpi-number" id="priceCurrent">Rs. 32.50 L</div>
+                <!-- 2x2 Key Benchmark Grid -->
+                <div class="glass-panel quick-specs-card">
+                    <div class="quick-specs-grid">
+                        <div class="spec-item">
+                            <span class="spec-caption">Market Benchmark</span>
+                            <span class="spec-value" id="dossierMarketPrice">₹8,420 / sq.ft</span>
                         </div>
-                        <div class="forecast-kpi-card">
-                            <span class="kpi-label">ML Model Target (2031)</span>
-                            <div class="kpi-number auto-style-6" id="priceFuture" >Rs. 46.15 L</div>
+                        <div class="spec-item">
+                            <span class="spec-caption">5-Year Target Model</span>
+                            <span class="spec-value" id="dossierModelPrice">₹12,850 / sq.ft</span>
                         </div>
-                    </div>
-
-                    <div class="hero-roi-pill">
-                        <span class="roi-label">Capital Appreciation Trajectory:</span>
-                        <span class="roi-value" id="priceRoi">+Rs. 13.65L (+42.0%)</span>
-                    </div>
-
-                    <div class="hero-footer-metrics">
-                        <div class="hero-stat-item">
-                            <span class="stat-caption">Algorithm</span>
-                            <span class="stat-highlight">Linear Reg (R² &gt; 0.99)</span>
+                        <div class="spec-item">
+                            <span class="spec-caption">Workforce Rate</span>
+                            <span class="spec-value" id="dossierEmpRate">82.4%</span>
                         </div>
-                        <div class="hero-stat-item">
-                            <span class="stat-caption">Annual Yield</span>
-                            <span class="stat-highlight">~8.4% p.a.</span>
-                        </div>
-                        <div class="hero-stat-item">
-                            <span class="stat-caption">Model Confidence</span>
-                            <span class="stat-highlight">High (±4.5% Bound)</span>
+                        <div class="spec-item">
+                            <span class="spec-caption">Economic Cluster</span>
+                            <span class="spec-value" id="dossierCluster">Growth Corridor</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Secondary Column (BHK Comparison & Signals) -->
-                <div class="bento-col-secondary">
-                    
-                    <!-- 1/2/3 BHK Comparative Benchmark Tile -->
-                    <div class="glass-panel tile-bhk-benchmark">
-                        <div class="bhk-tile-header">
-                            <div>
-                                <span class="card-label">Harmonized Scale</span>
-                                <h3  class="auto-style-7">Property Market Values</h3>
+                <!-- Quick Action Bar -->
+                <div class="sidebar-action-bar">
+                    <button class="btn-sidebar-action btn-sidebar-compare" id="compareThisBtn" title="Compare this location against another">
+                        <span class="action-icon">⚖️</span>
+                        <span>Compare Location</span>
+                    </button>
+                    <button class="btn-sidebar-action btn-sidebar-geoai" id="sidebarGeoAiBtn" title="Ask AI about this location">
+                        <span class="action-icon">✦</span>
+                        <span>Ask GeoAI</span>
+                    </button>
+                </div>
+
+            </aside>
+
+            <!-- --------------------------------------------------------
+                 COMPARTMENT 3: DYNAMIC TABBED ANALYTICAL WORKSPACE (8 COLUMNS)
+                 -------------------------------------------------------- -->
+            <main class="analytical-workspace-compartment">
+
+                <!-- Pill-Style Sticky Tab Navigation Bar -->
+                <div class="workspace-tabs-nav glass-panel" id="workspaceTabsNav">
+                    <button class="ws-tab-btn active" data-tab="tab-forecast" id="tabBtnForecast">
+                        <span class="tab-icon">📊</span>
+                        <span class="tab-label">Forecast &amp; Valuation</span>
+                    </button>
+                    <button class="ws-tab-btn" data-tab="tab-calc" id="tabBtnCalc">
+                        <span class="tab-icon">🧮</span>
+                        <span class="tab-label">Calculation Engine</span>
+                    </button>
+                    <button class="ws-tab-btn" data-tab="tab-cluster" id="tabBtnCluster">
+                        <span class="tab-icon">🧬</span>
+                        <span class="tab-label">Cluster &amp; Ventures</span>
+                    </button>
+                    <button class="ws-tab-btn" data-tab="tab-directory" id="tabBtnDirectory">
+                        <span class="tab-icon">📋</span>
+                        <span class="tab-label">Regional Directory</span>
+                    </button>
+                    <button class="ws-tab-btn" data-tab="tab-compare" id="tabBtnCompare">
+                        <span class="tab-icon">⚖️</span>
+                        <span class="tab-label">Compare (A vs B)</span>
+                    </button>
+                </div>
+
+                <!-- TAB PANELS CONTAINER -->
+                <div class="workspace-tab-panels">
+
+                    <!-- ========================================
+                         TAB 1: FORECAST & VALUATION (DEFAULT ACTIVE)
+                         ======================================== -->
+                    <div class="ws-tab-panel active" id="tab-forecast">
+                        
+                        <!-- 🤖 THE ML FORECAST HERO TILE -->
+                        <div class="glass-panel bento-hero">
+                            <div class="hero-top-row">
+                                <span class="hero-badge">🤖 AI MARKET FORECAST 2026—2031</span>
+                                <span class="hero-horizon">5-YEAR LINEAR REGRESSION HORIZON</span>
                             </div>
-                            <div class="bhk-toggle-group">
-                                <button class="bhk-toggle-btn active" id="btnModePrice" data-mode="price">₹ Lakhs</button>
-                                <button class="bhk-toggle-btn" id="btnModeSqft" data-mode="sqft">₹ / sq.ft</button>
+
+                            <!-- Forecast Line Chart with Historical Baseline + Forecast Confidence -->
+                            <div class="hero-chart-container">
+                                <canvas id="forecastChart"></canvas>
+                            </div>
+
+                            <div class="forecast-kpis">
+                                <div class="forecast-kpi-card">
+                                    <span class="kpi-label">Current Entry Benchmark (2026)</span>
+                                    <div class="kpi-number" id="priceCurrent">Rs. 32.50 L</div>
+                                </div>
+                                <div class="forecast-kpi-card">
+                                    <span class="kpi-label">ML Model Target (2031)</span>
+                                    <div class="kpi-number auto-style-6" id="priceFuture">Rs. 46.15 L</div>
+                                </div>
+                            </div>
+
+                            <div class="hero-roi-pill">
+                                <span class="roi-label">Capital Appreciation Trajectory:</span>
+                                <span class="roi-value" id="priceRoi">+Rs. 13.65L (+42.0%)</span>
+                            </div>
+
+                            <div class="hero-footer-metrics">
+                                <div class="hero-stat-item">
+                                    <span class="stat-caption">Algorithm</span>
+                                    <span class="stat-highlight">Linear Reg (R² &gt; 0.99)</span>
+                                </div>
+                                <div class="hero-stat-item">
+                                    <span class="stat-caption">Annual Yield</span>
+                                    <span class="stat-highlight">~8.4% p.a.</span>
+                                </div>
+                                <div class="hero-stat-item">
+                                    <span class="stat-caption">Model Confidence</span>
+                                    <span class="stat-highlight">High (±4.5% Bound)</span>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="bhk-bar-list">
-                            <!-- 1 BHK -->
-                            <div class="bhk-bar-item">
-                                <div class="bhk-bar-header">
-                                    <span class="bhk-bar-title">1 BHK Benchmark (450 sq.ft)</span>
-                                    <span class="bhk-bar-val" id="price1bhk">Rs. 32.50 L</span>
+                        <!-- 2-Column Split: Property Market Values & Market Signals -->
+                        <div class="forecast-subgrid">
+                            
+                            <!-- 1/2/3 BHK Comparative Benchmark Tile -->
+                            <div class="glass-panel tile-bhk-benchmark">
+                                <div class="bhk-tile-header">
+                                    <div>
+                                        <span class="card-label">Harmonized Scale</span>
+                                        <h3 class="auto-style-7">Property Market Values</h3>
+                                    </div>
+                                    <div class="bhk-toggle-group">
+                                        <button class="bhk-toggle-btn active" id="btnModePrice" data-mode="price">₹ Lakhs</button>
+                                        <button class="bhk-toggle-btn" id="btnModeSqft" data-mode="sqft">₹ / sq.ft</button>
+                                    </div>
                                 </div>
-                                <div class="bhk-progress-bg">
-                                    <div class="bhk-progress-fill fill-1bhk auto-style-8" id="bar1bhk" ></div>
+
+                                <div class="bhk-bar-list">
+                                    <!-- 1 BHK -->
+                                    <div class="bhk-bar-item">
+                                        <div class="bhk-bar-header">
+                                            <span class="bhk-bar-title">1 BHK Benchmark (450 sq.ft)</span>
+                                            <span class="bhk-bar-val" id="price1bhk">Rs. 32.50 L</span>
+                                        </div>
+                                        <div class="bhk-progress-bg">
+                                            <div class="bhk-progress-fill fill-1bhk auto-style-8" id="bar1bhk"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 2 BHK -->
+                                    <div class="bhk-bar-item">
+                                        <div class="bhk-bar-header">
+                                            <span class="bhk-bar-title">2 BHK Benchmark (750 sq.ft)</span>
+                                            <span class="bhk-bar-val" id="price2bhk">Rs. 48.75 L</span>
+                                        </div>
+                                        <div class="bhk-progress-bg">
+                                            <div class="bhk-progress-fill fill-2bhk auto-style-9" id="bar2bhk"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 3 BHK -->
+                                    <div class="bhk-bar-item">
+                                        <div class="bhk-bar-header">
+                                            <span class="bhk-bar-title">3 BHK Benchmark (1100 sq.ft)</span>
+                                            <span class="bhk-bar-val" id="price3bhk">Rs. 72.40 L</span>
+                                        </div>
+                                        <div class="bhk-progress-bg">
+                                            <div class="bhk-progress-fill fill-3bhk auto-style-10" id="bar3bhk"></div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- 2 BHK -->
-                            <div class="bhk-bar-item">
-                                <div class="bhk-bar-header">
-                                    <span class="bhk-bar-title">2 BHK Benchmark (750 sq.ft)</span>
-                                    <span class="bhk-bar-val" id="price2bhk">Rs. 48.75 L</span>
+                            <!-- Employment & Market Signals Tile -->
+                            <div class="glass-panel tile-signals">
+                                <div class="bhk-tile-header">
+                                    <div>
+                                        <span class="card-label">Socio-Economic & Momentum</span>
+                                        <h3 class="auto-style-11">Market Signals</h3>
+                                    </div>
+                                    <span class="stat-chip auto-style-12">Live Feeds</span>
                                 </div>
-                                <div class="bhk-progress-bg">
-                                    <div class="bhk-progress-fill fill-2bhk auto-style-9" id="bar2bhk" ></div>
+
+                                <!-- Workforce bar -->
+                                <div class="auto-style-13">
+                                    <div class="auto-style-14">
+                                        <span class="auto-style-15">Workforce Employed</span>
+                                        <span id="empRate" class="auto-style-16">82.4%</span>
+                                    </div>
+                                    <div class="emp-bar-container">
+                                        <div class="emp-bar emp-bar-green auto-style-17" id="empBar"></div>
+                                    </div>
+                                    <div class="emp-mini-footer">
+                                        <span>Unemployment Index:</span>
+                                        <strong id="unempRate">17.6%</strong>
+                                    </div>
+                                    <div id="unempBar" class="auto-style-18"></div>
+                                </div>
+
+                                <!-- Market Signals List -->
+                                <div class="signals-grid">
+                                    <div class="signal-row">
+                                        <div class="signal-info">
+                                            <span>↗</span>
+                                            <span>Property Momentum</span>
+                                        </div>
+                                        <span class="signal-badge" id="sigMomentum">+8.4% annual</span>
+                                    </div>
+                                    <div class="signal-row">
+                                        <div class="signal-info">
+                                            <span>●</span>
+                                            <span>Employment Stability</span>
+                                        </div>
+                                        <span class="signal-badge auto-style-19" id="sigEmployment">High Density</span>
+                                    </div>
+                                    <div class="signal-row">
+                                        <div class="signal-info">
+                                            <span>↗</span>
+                                            <span>Commercial Activity</span>
+                                        </div>
+                                        <span class="signal-badge auto-style-20" id="sigCommercial">High Opportunity</span>
+                                    </div>
+                                    <div class="signal-row">
+                                        <div class="signal-info">
+                                            <span>◆</span>
+                                            <span>Cluster Movement</span>
+                                        </div>
+                                        <span class="signal-badge auto-style-21" id="sigCluster">Growth Corridor</span>
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- 3 BHK -->
-                            <div class="bhk-bar-item">
-                                <div class="bhk-bar-header">
-                                    <span class="bhk-bar-title">3 BHK Benchmark (1100 sq.ft)</span>
-                                    <span class="bhk-bar-val" id="price3bhk">Rs. 72.40 L</span>
+                        </div>
+
+                    </div>
+
+                    <!-- ========================================
+                         TAB 2: CALCULATION ENGINE
+                         ======================================== -->
+                    <div class="ws-tab-panel" id="tab-calc">
+                        <div class="calc-breakdown-card" id="calcBreakdownCard">
+                            <div class="calc-header" onclick="toggleCalcDetails()">
+                                <div class="calc-header-left">
+                                    <div>
+                                        <h3 class="calc-title">Step-by-Step Calculation Engine</h3>
+                                        <span class="calc-subtitle">All mathematical derivations, formulas &amp; aggregations evaluated before output generation</span>
+                                    </div>
                                 </div>
-                                <div class="bhk-progress-bg">
-                                    <div class="bhk-progress-fill fill-3bhk auto-style-10" id="bar3bhk" ></div>
+                                <div class="calc-header-right">
+                                    <span class="calc-status-badge">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                        Evaluated Live
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 3px;">
+                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                            <polyline points="12 5 19 12 12 19"></polyline>
+                                        </svg>
+                                    </span>
+                                    <span id="calcToggleIcon" class="calc-toggle-arrow">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="18 15 12 9 6 15"></polyline>
+                                        </svg>
+                                    </span>
                                 </div>
+                            </div>
+                            <div id="calcDetailsBody" class="calc-body" style="display: block;">
+                                <!-- Populated dynamically by app.js before showing output -->
                             </div>
                         </div>
                     </div>
 
-                    <!-- Employment & Market Signals Tile -->
-                    <div class="glass-panel tile-signals">
-                        <div class="bhk-tile-header">
-                            <div>
-                                <span class="card-label">Socio-Economic & Momentum</span>
-                                <h3  class="auto-style-11">Market Signals</h3>
+                    <!-- ========================================
+                         TAB 3: CLUSTER & VENTURES
+                         ======================================== -->
+                    <div class="ws-tab-panel" id="tab-cluster">
+                        
+                        <!-- Human-Readable K-Means Economic Clusters Section -->
+                        <div class="glass-panel bento-kmeans-tile">
+                            <div class="kmeans-header">
+                                <div>
+                                    <span class="location-eyebrow">UNSUPERVISED CLUSTERING (k=5)</span>
+                                    <h3 class="auto-style-22">Economic Cluster Profiling</h3>
+                                </div>
+                                <div class="kmeans-cluster-tag" id="clusterTag">
+                                    <span>🧬</span>
+                                    <span id="clusterName">ECONOMIC CLUSTER ● GROWTH CORRIDOR</span>
+                                </div>
                             </div>
-                            <span class="stat-chip auto-style-12" >Live Feeds</span>
+
+                            <div class="kmeans-body">
+                                <div class="kmeans-desc-col">
+                                    <p id="clusterDesc">
+                                        This location belongs to a high-momentum cluster characterized by expanding tech/commercial infrastructure, robust residential housing demand, and strong disposable workforce incomes.
+                                    </p>
+
+                                    <div class="cluster-metrics-bars">
+                                        <div class="c-metric-item">
+                                            <span class="c-metric-name">Property</span>
+                                            <div class="c-metric-bar"><div class="c-metric-fill auto-style-23" id="cBarProperty"></div></div>
+                                            <span id="cValProperty" class="auto-style-24">84</span>
+                                        </div>
+                                        <div class="c-metric-item">
+                                            <span class="c-metric-name">Employment</span>
+                                            <div class="c-metric-bar"><div class="c-metric-fill auto-style-25" id="cBarEmployment"></div></div>
+                                            <span id="cValEmployment" class="auto-style-26">82</span>
+                                        </div>
+                                        <div class="c-metric-item">
+                                            <span class="c-metric-name">Commercial</span>
+                                            <div class="c-metric-bar"><div class="c-metric-fill auto-style-27" id="cBarCommercial"></div></div>
+                                            <span id="cValCommercial" class="auto-style-28">90</span>
+                                        </div>
+                                        <div class="c-metric-item">
+                                            <span class="c-metric-name">Growth</span>
+                                            <div class="c-metric-bar"><div class="c-metric-fill auto-style-29" id="cBarGrowth"></div></div>
+                                            <span id="cValGrowth" class="auto-style-30">94</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Locality specifics -->
+                                    <div class="auto-style-31">
+                                        <div class="auto-style-32">Locality Character & Scope</div>
+                                        <p id="villageInfo" class="auto-style-33">—</p>
+                                        <p id="growthScope" class="auto-style-34">—</p>
+                                        <span id="localityType" class="auto-style-35">—</span>
+                                    </div>
+                                </div>
+
+                                <!-- Similar Locations in this Cluster -->
+                                <div class="similar-locations-wrap">
+                                    <div class="similar-loc-title">
+                                        <span>Similar Locations in Cluster</span>
+                                        <span class="auto-style-36">Click to analyze</span>
+                                    </div>
+                                    <div class="similar-chips" id="similarClusterChips">
+                                        <!-- Populated dynamically from matching cluster data -->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <!-- Workforce bar -->
-                        <div  class="auto-style-13">
-                            <div  class="auto-style-14">
-                                <span  class="auto-style-15">Workforce Employed</span>
-                                <span  id="empRate" class="auto-style-16">82.4%</span>
+                        <!-- Commercial Viability Engine -->
+                        <div class="glass-panel bento-biz-tile auto-style-37" style="margin-top: 16px;">
+                            <div class="bento-panel-header">
+                                <span class="panel-icon">💡</span>
+                                <div>
+                                    <span class="card-label">Commercial Viability Engine</span>
+                                    <h3>Recommended Ventures for this Micro-Economy</h3>
+                                </div>
                             </div>
-                            <div class="emp-bar-container">
-                                <div class="emp-bar emp-bar-green auto-style-17" id="empBar" ></div>
-                            </div>
-                            <div class="emp-mini-footer">
-                                <span>Unemployment Index:</span>
-                                <strong id="unempRate">17.6%</strong>
-                            </div>
-                            <div id="unempBar"  class="auto-style-18"></div>
+                            <div class="suggestions-grid" id="bizSuggestions"></div>
                         </div>
 
-                        <!-- Market Signals List -->
-                        <div class="signals-grid">
-                            <div class="signal-row">
-                                <div class="signal-info">
-                                    <span>↗</span>
-                                    <span>Property Momentum</span>
+                    </div>
+
+                    <!-- ========================================
+                         TAB 4: REGIONAL DIRECTORY
+                         ======================================== -->
+                    <div class="ws-tab-panel" id="tab-directory">
+                        <div class="glass-panel bento-table-tile">
+                            <div class="bento-panel-header table-bar">
+                                <div class="table-bar-left">
+                                    <span class="panel-icon">📋</span>
+                                    <div>
+                                        <span class="card-label">Regional Directory</span>
+                                        <h3>Matching Locality Records</h3>
+                                    </div>
                                 </div>
-                                <span class="signal-badge" id="sigMomentum">+8.4% annual</span>
+                                <span class="result-count" id="resultCount">0 results</span>
                             </div>
-                            <div class="signal-row">
-                                <div class="signal-info">
-                                    <span>●</span>
-                                    <span>Employment Stability</span>
-                                </div>
-                                <span class="signal-badge auto-style-19" id="sigEmployment" >High Density</span>
+                            <div class="table-wrapper">
+                                <table class="data-table" id="dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>District</th>
+                                            <th>Taluka</th>
+                                            <th>Village / Ward</th>
+                                            <th>Cluster Profile</th>
+                                            <th>1 BHK (₹L)</th>
+                                            <th>2 BHK (₹L)</th>
+                                            <th>Emp %</th>
+                                            <th>Opportunity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableBody"></tbody>
+                                </table>
                             </div>
-                            <div class="signal-row">
-                                <div class="signal-info">
-                                    <span>↗</span>
-                                    <span>Commercial Activity</span>
+                        </div>
+                    </div>
+
+                    <!-- ========================================
+                         TAB 5: COMPARE (A vs B)
+                         ======================================== -->
+                    <div class="ws-tab-panel" id="tab-compare">
+                        <div class="glass-panel compare-workspace-card">
+                            <div class="bento-panel-header auto-style-41">
+                                <span class="panel-icon">⚖️</span>
+                                <div>
+                                    <span class="card-label">Head-to-Head Comparative Intelligence</span>
+                                    <h3>Compare Two Locations in Maharashtra</h3>
                                 </div>
-                                <span class="signal-badge auto-style-20" id="sigCommercial" >High Opportunity</span>
                             </div>
-                            <div class="signal-row">
-                                <div class="signal-info">
-                                    <span>◆</span>
-                                    <span>Cluster Movement</span>
+                            <p class="auto-style-42">Select any two districts, talukas, or villages to review direct side-by-side metrics without algorithmic bias.</p>
+
+                            <div class="compare-selectors-row">
+                                <div class="compare-sel-box">
+                                    <label class="auto-style-43">Location A</label>
+                                    <select class="compare-select" id="compareSelectA" title="Select Location A"></select>
                                 </div>
-                                <span class="signal-badge auto-style-21" id="sigCluster" >Growth Corridor</span>
+                                <div class="compare-vs-badge">VS</div>
+                                <div class="compare-sel-box">
+                                    <label class="auto-style-44">Location B</label>
+                                    <select class="compare-select" id="compareSelectB" title="Select Location B"></select>
+                                </div>
+                            </div>
+
+                            <div class="compare-bars-table" id="compareBarsTable">
+                                <!-- Dynamically populated comparative bars -->
                             </div>
                         </div>
                     </div>
 
                 </div>
 
-            </div>
-
-            <!-- 6. Human-Readable K-Means Economic Clusters Section -->
-            <div class="glass-panel bento-kmeans-tile">
-                <div class="kmeans-header">
-                    <div>
-                        <span class="location-eyebrow">UNSUPERVISED CLUSTERING (k=5)</span>
-                        <h3  class="auto-style-22">Economic Cluster Profiling</h3>
-                    </div>
-                    <div class="kmeans-cluster-tag" id="clusterTag">
-                        <span>🧬</span>
-                        <span id="clusterName">ECONOMIC CLUSTER ● GROWTH CORRIDOR</span>
-                    </div>
-                </div>
-
-                <div class="kmeans-body">
-                    <div class="kmeans-desc-col">
-                        <p id="clusterDesc">
-                            This location belongs to a high-momentum cluster characterized by expanding tech/commercial infrastructure, robust residential housing demand, and strong disposable workforce incomes.
-                        </p>
-
-                        <div class="cluster-metrics-bars">
-                            <div class="c-metric-item">
-                                <span class="c-metric-name">Property</span>
-                                <div class="c-metric-bar"><div class="c-metric-fill auto-style-23" id="cBarProperty" ></div></div>
-                                <span  id="cValProperty" class="auto-style-24">84</span>
-                            </div>
-                            <div class="c-metric-item">
-                                <span class="c-metric-name">Employment</span>
-                                <div class="c-metric-bar"><div class="c-metric-fill auto-style-25" id="cBarEmployment" ></div></div>
-                                <span  id="cValEmployment" class="auto-style-26">82</span>
-                            </div>
-                            <div class="c-metric-item">
-                                <span class="c-metric-name">Commercial</span>
-                                <div class="c-metric-bar"><div class="c-metric-fill auto-style-27" id="cBarCommercial" ></div></div>
-                                <span  id="cValCommercial" class="auto-style-28">90</span>
-                            </div>
-                            <div class="c-metric-item">
-                                <span class="c-metric-name">Growth</span>
-                                <div class="c-metric-bar"><div class="c-metric-fill auto-style-29" id="cBarGrowth" ></div></div>
-                                <span  id="cValGrowth" class="auto-style-30">94</span>
-                            </div>
-                        </div>
-
-                        <!-- Locality specifics -->
-                        <div  class="auto-style-31">
-                            <div  class="auto-style-32">Locality Character & Scope</div>
-                            <p  id="villageInfo" class="auto-style-33">—</p>
-                            <p  id="growthScope" class="auto-style-34">—</p>
-                            <span id="localityType"  class="auto-style-35">—</span>
-                        </div>
-                    </div>
-
-                    <!-- Similar Locations in this Cluster -->
-                    <div class="similar-locations-wrap">
-                        <div class="similar-loc-title">
-                            <span>Similar Locations in Cluster</span>
-                            <span  class="auto-style-36">Click to analyze</span>
-                        </div>
-                        <div class="similar-chips" id="similarClusterChips">
-                            <!-- Populated dynamically from matching cluster data -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 7. Secondary Row: Business Opportunity Viability Engine -->
-            <div class="bento-secondary-row">
-                
-                <!-- Business Suggestions Tile -->
-                <div class="glass-panel bento-biz-tile auto-style-37" >
-                    <div class="bento-panel-header">
-                        <span class="panel-icon">💡</span>
-                        <div>
-                            <span class="card-label">Commercial Viability Engine</span>
-                            <h3>Recommended Ventures for this Micro-Economy</h3>
-                        </div>
-                    </div>
-                    <div class="suggestions-grid" id="bizSuggestions"></div>
-                </div>
-
-            </div>
-
-            <!-- 8. Regional Directory Data Table -->
-            <div class="glass-panel bento-table-tile">
-                <div class="bento-panel-header table-bar">
-                    <div class="table-bar-left">
-                        <span class="panel-icon">📋</span>
-                        <div>
-                            <span class="card-label">Regional Directory</span>
-                            <h3>Matching Locality Records</h3>
-                        </div>
-                    </div>
-                    <span class="result-count" id="resultCount">0 results</span>
-                </div>
-                <div class="table-wrapper">
-                    <table class="data-table" id="dataTable">
-                        <thead>
-                            <tr>
-                                <th>District</th>
-                                <th>Taluka</th>
-                                <th>Village / Ward</th>
-                                <th>Cluster Profile</th>
-                                <th>1 BHK (₹L)</th>
-                                <th>2 BHK (₹L)</th>
-                                <th>Emp %</th>
-                                <th>Opportunity</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tableBody"></tbody>
-                    </table>
-                </div>
-            </div>
+            </main>
 
         </section>
 
         <!-- Error State (If an invalid search is entered) -->
-        <section class="error-state glass-panel auto-style-38" id="errorState" >
+        <section class="error-state glass-panel auto-style-38" id="errorState" style="display: none;">
             <div class="error-icon">🔍</div>
             <h2 id="errorTitle">Location Not Found</h2>
             <p id="errorMessage">Try searching for a valid Maharashtra district, taluka, or village name.</p>
-            <div  class="auto-style-39">
-                <button class="search-btn auto-style-40" id="btnBackToOverview" >View Pune (Default)</button>
+            <div class="auto-style-39">
+                <button class="search-btn auto-style-40" id="btnBackToOverview">View Pune (Default)</button>
             </div>
         </section>
 
     </main>
-
-    <!-- ============================================================
-         MODAL 1: COMPARE LOCATIONS (VS MODE)
-         ============================================================ -->
-    <div class="modal-overlay" id="compareModalOverlay">
-        <div class="compare-modal">
-            <button class="modal-close-btn" id="closeCompareModal" title="Close">&times;</button>
-            
-            <div class="bento-panel-header auto-style-41" >
-                <span class="panel-icon">⚖️</span>
-                <div>
-                    <span class="card-label">Head-to-Head Comparative Intelligence</span>
-                    <h3>Compare Two Locations in Maharashtra</h3>
-                </div>
-            </div>
-            <p  class="auto-style-42">Select any two districts, talukas, or villages to review direct side-by-side metrics without algorithmic bias.</p>
-
-            <div class="compare-selectors-row">
-                <div>
-                    <label  class="auto-style-43">Location A</label>
-                    <select class="compare-select" id="compareSelectA" title="Select Location A"></select>
-                </div>
-                <div class="compare-vs-badge">VS</div>
-                <div>
-                    <label  class="auto-style-44">Location B</label>
-                    <select class="compare-select" id="compareSelectB" title="Select Location B"></select>
-                </div>
-            </div>
-
-            <div class="compare-bars-table" id="compareBarsTable">
-                <!-- Dynamically populated comparative bars -->
-            </div>
-        </div>
-    </div>
 
     <!-- ============================================================
          MODAL 2: COMMAND PALETTE (CTRL+K)

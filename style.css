@@ -2577,7 +2577,7 @@ body {
     color: #0f172a;
 }
 
-/* Responsive adjustments */
+/* Responsive adjustments for calculation flow */
 @media (max-width: 992px) {
     .calc-flow-row {
         flex-direction: column;
@@ -2587,6 +2587,469 @@ body {
         display: none;
     }
 }
+
+/* ============================================================
+   MULTI-COMPARTMENT SAAS WORKSPACE STYLES
+   ============================================================ */
+
+/* Main Container width for SaaS Split Grid */
+.main-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 20px 24px 64px;
+}
+
+/* COMPARTMENT 1: STICKY SEARCH & COMMAND COMPARTMENT */
+.search-compartment {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px -2px rgba(15, 23, 42, 0.05);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    z-index: 80;
+}
+
+.search-compartment.searched-mode {
+    padding: 14px 20px 12px;
+    position: sticky;
+    top: 64px;
+    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.08);
+}
+
+.hero-collapsible {
+    text-align: center;
+    max-height: 380px;
+    opacity: 1;
+    overflow: hidden;
+    transition: max-height 0.35s ease, opacity 0.25s ease, margin 0.35s ease, transform 0.35s ease;
+    margin-bottom: 20px;
+}
+
+.search-compartment.searched-mode .hero-collapsible {
+    max-height: 0;
+    opacity: 0;
+    margin-bottom: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+}
+
+.command-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.command-bar-row .search-wrapper {
+    flex: 1;
+    margin: 0;
+    max-width: none;
+}
+
+.btn-statewide-toggle {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #334155;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    flex-shrink: 0;
+    height: 42px;
+}
+
+.btn-statewide-toggle:hover {
+    background: #eff6ff;
+    border-color: #93c5fd;
+    color: #1d4ed8;
+}
+
+.btn-statewide-toggle.active {
+    background: #dbeafe;
+    border-color: #3b82f6;
+    color: #1d4ed8;
+}
+
+/* Quick city chips horizontal scroll */
+.quick-tags-scroll-wrap {
+    max-width: 900px;
+    margin: 10px auto 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+}
+
+.quick-tags-scroll-wrap::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}
+
+.quick-tags-scroll-wrap .quick-tags {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    padding: 2px 2px;
+}
+
+/* Collapsible Statewide stats strip */
+.live-intel-strip {
+    transition: max-height 0.35s ease, opacity 0.25s ease, margin 0.35s ease, padding 0.35s ease;
+    overflow: hidden;
+}
+
+.live-intel-strip.collapsed {
+    max-height: 0 !important;
+    opacity: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    border-color: transparent !important;
+    pointer-events: none;
+}
+
+/* ============================================================
+   MAIN RESULTS WORKSPACE: 12-COLUMN SPLIT GRID
+   ============================================================ */
+.workspace-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 24px;
+    align-items: start;
+    margin-top: 20px;
+}
+
+/* COMPARTMENT 2: PINNED LOCATION DOSSIER SIDEBAR */
+.dossier-sidebar-compartment {
+    grid-column: span 12;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+@media (min-width: 1024px) {
+    .dossier-sidebar-compartment {
+        grid-column: span 4;
+        position: sticky;
+        top: 140px;
+        max-height: calc(100vh - 160px);
+        overflow-y: auto;
+        scrollbar-width: thin;
+        padding-right: 4px;
+    }
+}
+
+.dossier-sidebar-header {
+    padding: 18px 20px;
+    margin-bottom: 0;
+    border-radius: 16px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+}
+
+.dossier-sidebar-header .location-info h2 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+}
+
+.dossier-sidebar-header .location-sub {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 12px;
+}
+
+.dossier-sidebar-compartment .intel-profile-card {
+    padding: 18px 20px;
+    margin-bottom: 0;
+    border-radius: 16px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+}
+
+.dossier-sidebar-compartment .intel-profile-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.dossier-sidebar-compartment .intel-index-box {
+    border-right: none;
+    padding-right: 0;
+    gap: 14px;
+}
+
+.dossier-sidebar-compartment .intel-subscores {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.quick-specs-card {
+    padding: 16px 20px;
+    border-radius: 16px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+}
+
+.quick-specs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+/* Sidebar Quick Action Bar */
+.sidebar-action-bar {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.btn-sidebar-action {
+    flex: 1;
+    padding: 11px 14px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.82rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    border: 1px solid transparent;
+}
+
+.btn-sidebar-compare {
+    background: #eff6ff;
+    color: #1d4ed8;
+    border-color: #dbeafe;
+}
+
+.btn-sidebar-compare:hover {
+    background: #dbeafe;
+    border-color: #93c5fd;
+    transform: translateY(-1px);
+}
+
+.btn-sidebar-geoai {
+    background: #f5f3ff;
+    color: #7c3aed;
+    border-color: #ede9fe;
+}
+
+.btn-sidebar-geoai:hover {
+    background: #ede9fe;
+    border-color: #ddd6fe;
+    transform: translateY(-1px);
+}
+
+/* COMPARTMENT 3: DYNAMIC TABBED ANALYTICAL WORKSPACE */
+.analytical-workspace-compartment {
+    grid-column: span 12;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+}
+
+@media (min-width: 1024px) {
+    .analytical-workspace-compartment {
+        grid-column: span 8;
+    }
+}
+
+/* Workspace Pill-Style Tabs */
+.workspace-tabs-nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 8px;
+    border-radius: 14px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    position: sticky;
+    top: 130px;
+    z-index: 50;
+    backdrop-filter: blur(8px);
+}
+
+.workspace-tabs-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.ws-tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #64748b;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.18s ease;
+    font-family: inherit;
+    user-select: none;
+}
+
+.ws-tab-btn:hover {
+    color: #0f172a;
+    background: #f8fafc;
+}
+
+.ws-tab-btn.active {
+    color: #1d4ed8;
+    background: #eff6ff;
+    box-shadow: 0 1px 2px rgba(29, 78, 216, 0.08);
+    border: 1px solid #dbeafe;
+    font-weight: 700;
+}
+
+.tab-icon, .ws-tab-icon {
+    font-size: 0.95rem;
+}
+
+.tab-label, .ws-tab-label {
+    letter-spacing: -0.01em;
+}
+
+/* Workspace Tab Panels */
+.workspace-tab-panels {
+    min-width: 0;
+}
+
+.ws-tab-panel {
+    display: none;
+    animation: tabFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.ws-tab-panel.active {
+    display: block;
+}
+
+@keyframes tabFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Sub-grid for Tab 1 (BHK + Signals) */
+.forecast-subgrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+@media (min-width: 768px) {
+    .forecast-subgrid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Compare Workspace Card inside Tab 5 */
+.compare-workspace-card {
+    padding: 24px 28px;
+    border-radius: 16px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+}
+
+.compare-selectors-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 20px 0;
+}
+
+.compare-sel-box {
+    flex: 1;
+}
+
+.compare-sel-box label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.compare-select {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #0f172a;
+    outline: none;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.compare-select:focus {
+    border-color: #3b82f6;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.compare-vs-badge {
+    background: #0f172a;
+    color: #ffffff;
+    font-size: 0.74rem;
+    font-weight: 800;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 18px;
+    letter-spacing: 0.05em;
+}
+
+.compare-bars-table {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
 
 
 

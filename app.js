@@ -3125,6 +3125,7 @@ let forecastChartInstance = null;
 let leafletMap = null;
 let mapMarkersLayer = null;
 let activeHighlightMarker = null;
+let statewideStatsPinnedOpen = false;
 
 // DOM Elements Initialization
 const searchInput = document.getElementById('searchInput');
@@ -3304,7 +3305,22 @@ async function performSearch(query) {
         mainOpp, topItem, propScore, empScore, bizScore, intelIndex
     });
 
-    if (dashboard) dashboard.style.display = 'block';
+    if (dashboard) {
+        dashboard.style.display = 'grid';
+        dashboard.classList.add('active');
+    }
+
+    // Collapse hero section into sticky command bar mode
+    const searchComp = document.getElementById('searchCompartment');
+    if (searchComp) searchComp.classList.add('searched-mode');
+
+    // Automatically collapse 4-card statewide stats banner on search
+    const liveIntel = document.getElementById('liveIntelStrip');
+    if (liveIntel && !statewideStatsPinnedOpen) {
+        liveIntel.classList.add('collapsed');
+        const toggleBtn = document.getElementById('btnToggleStatewideStats');
+        if (toggleBtn) toggleBtn.classList.remove('active');
+    }
 
     // Location Header Title
     if (count === 1) {
@@ -4291,32 +4307,122 @@ document.querySelectorAll('.map-layer-btn').forEach(btn => {
 });
 
 // ============================================================
-// COMPARE LOCATIONS (VS MODE MODAL)
+// MODULAR MULTI-COMPARTMENT SAAS WORKSPACE CONTROLLERS
 // ============================================================
+
+// --- 1. Workspace Tab Navigation ---
+function switchWorkspaceTab(tabId) {
+    const tabBtns = document.querySelectorAll('.ws-tab-btn');
+    const tabPanels = document.querySelectorAll('.ws-tab-panel');
+
+    tabBtns.forEach(btn => {
+        if (btn.dataset.tab === tabId) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+
+    tabPanels.forEach(panel => {
+        if (panel.id === tabId) {
+            panel.classList.add('active');
+        } else {
+            panel.classList.remove('active');
+        }
+    });
+
+    if (tabId === 'tab-forecast') {
+        // Crucial requirement: Call chart.resize() so Chart.js canvas renders properly
+        if (forecastChartInstance) {
+            setTimeout(() => {
+                try {
+                    forecastChartInstance.resize();
+                } catch (err) {
+                    console.warn('Forecast chart resize warning:', err);
+                }
+            }, 60);
+        }
+    } else if (tabId === 'tab-compare') {
+        populateCompareDropdowns();
+        updateComparison();
+    }
+}
+window.switchWorkspaceTab = switchWorkspaceTab;
+
+function initWorkspaceTabs() {
+    const tabBtns = document.querySelectorAll('.ws-tab-btn');
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetTab = btn.dataset.tab;
+            if (targetTab) {
+                switchWorkspaceTab(targetTab);
+            }
+        });
+    });
+}
+
+// --- 2. Search Compartment & Statewide Stats Toggle ---
+function initSearchCompartment() {
+    const toggleBtn = document.getElementById('btnToggleStatewideStats');
+    const liveIntel = document.getElementById('liveIntelStrip');
+
+    if (toggleBtn && liveIntel) {
+        toggleBtn.addEventListener('click', () => {
+            const isCurrentlyCollapsed = liveIntel.classList.contains('collapsed');
+            if (isCurrentlyCollapsed) {
+                liveIntel.classList.remove('collapsed');
+                toggleBtn.classList.add('active');
+                statewideStatsPinnedOpen = true;
+            } else {
+                liveIntel.classList.add('collapsed');
+                toggleBtn.classList.remove('active');
+                statewideStatsPinnedOpen = false;
+            }
+        });
+    }
+}
+
+// --- 3. Head-to-Head Comparison (Embedded in Tab 5 & Quick Action Bar) ---
 const compareModal = document.getElementById('compareModalOverlay');
 const openCompareBtn = document.getElementById('openCompareBtn');
 const compareThisBtn = document.getElementById('compareThisBtn');
+const sidebarGeoAiBtn = document.getElementById('sidebarGeoAiBtn');
 const closeCompareModal = document.getElementById('closeCompareModal');
 const selectA = document.getElementById('compareSelectA');
 const selectB = document.getElementById('compareSelectB');
 
 function populateCompareDropdowns() {
-    if (!selectA || !selectB || selectA.options.length > 0) return;
+    const selA = document.getElementById('compareSelectA');
+    const selB = document.getElementById('compareSelectB');
+    if (!selA || !selB) return;
+    if (selA.options.length > 0 && selB.options.length > 0) return;
 
-    // Distinct prominent locations
+    // Distinct prominent locations across Maharashtra
     const prominent = ["Wagholi", "Hinjawadi", "Pune", "Mumbai", "Nashik", "Nagpur", "Panvel", "Thane", "Chhatrapati Sambhajinagar", "Kolhapur", "Solapur", "Jalgaon"];
+    if (currentActiveLocation && !prominent.includes(currentActiveLocation.Village)) {
+        prominent.unshift(currentActiveLocation.Village);
+    }
     const optionsHtml = prominent.map(name => `<option value="${name}">${name}</option>`).join('');
     
-    selectA.innerHTML = optionsHtml;
-    selectB.innerHTML = optionsHtml;
+    selA.innerHTML = optionsHtml;
+    selB.innerHTML = optionsHtml;
 
-    selectA.value = "Pune";
-    selectB.value = "Nashik";
+    if (currentActiveLocation) {
+        selA.value = currentActiveLocation.Village;
+        selB.value = (currentActiveLocation.Village === "Mumbai") ? "Pune" : "Mumbai";
+    } else {
+        selA.value = "Pune";
+        selB.value = "Nashik";
+    }
 }
 
 function updateComparison() {
-    const locA = selectA.value;
-    const locB = selectB.value;
+    const selA = document.getElementById('compareSelectA');
+    const selB = document.getElementById('compareSelectB');
+    if (!selA || !selB || !selA.value || !selB.value) return;
+
+    const locA = selA.value;
+    const locB = selB.value;
     const dataA = searchData(locA)[0] || DATA[0];
     const dataB = searchData(locB)[0] || DATA[1];
 
@@ -4414,6 +4520,9 @@ if (openCompareBtn) {
     openCompareBtn.addEventListener('click', () => {
         populateCompareDropdowns();
         updateComparison();
+        switchWorkspaceTab('tab-compare');
+        const tabsNav = document.getElementById('workspaceTabsNav');
+        if (tabsNav) tabsNav.scrollIntoView({ behavior: 'smooth', block: 'start' });
         if (compareModal) compareModal.classList.add('open');
     });
 }
@@ -4421,16 +4530,44 @@ if (openCompareBtn) {
 if (compareThisBtn) {
     compareThisBtn.addEventListener('click', () => {
         populateCompareDropdowns();
-        if (currentActiveLocation) {
-            selectA.value = currentActiveLocation.Village;
-            if (selectA.value !== "Mumbai") {
-                selectB.value = "Mumbai";
-            } else {
-                selectB.value = "Pune";
+        const selA = document.getElementById('compareSelectA');
+        const selB = document.getElementById('compareSelectB');
+
+        if (selA && currentActiveLocation) {
+            const curName = currentActiveLocation.Village;
+            let found = false;
+            for (let i = 0; i < selA.options.length; i++) {
+                if (selA.options[i].value.toLowerCase() === curName.toLowerCase()) {
+                    selA.selectedIndex = i;
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                const optA = new Option(curName, curName, true, true);
+                selA.add(optA, 0);
+                selA.value = curName;
+            }
+
+            if (selB) {
+                if (selA.value.toLowerCase() !== "mumbai") {
+                    selB.value = "Mumbai";
+                } else {
+                    selB.value = "Pune";
+                }
             }
         }
         updateComparison();
+        switchWorkspaceTab('tab-compare');
+        const tabsNav = document.getElementById('workspaceTabsNav');
+        if (tabsNav) tabsNav.scrollIntoView({ behavior: 'smooth', block: 'start' });
         if (compareModal) compareModal.classList.add('open');
+    });
+}
+
+if (sidebarGeoAiBtn) {
+    sidebarGeoAiBtn.addEventListener('click', () => {
+        toggleGeoAi();
     });
 }
 
@@ -4693,7 +4830,11 @@ window.addEventListener('DOMContentLoaded', () => {
     // 1. Initialize Map
     initMap();
 
-    // 2. Read URL params or default to Wagholi / Pune
+    // 2. Initialize Workspace Tabs & Search Compartment
+    initWorkspaceTabs();
+    initSearchCompartment();
+
+    // 3. Read URL params or default to Wagholi / Pune
     const urlParams = new URLSearchParams(window.location.search);
     const initialLocation = urlParams.get('q') || urlParams.get('location') || 'Wagholi';
     

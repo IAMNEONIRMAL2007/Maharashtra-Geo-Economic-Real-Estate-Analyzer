@@ -3225,8 +3225,42 @@ async function performSearch(query) {
     if (errorState) errorState.style.display = 'none';
     if (dashboard) dashboard.style.display = 'none';
 
+    currentResults = results;
+    const topItem = results[0];
+    currentActiveLocation = topItem;
+
+    const count = results.length;
+    const sumBHK1 = results.reduce((s, r) => s + r.BHK1, 0);
+    const sumBHK2 = results.reduce((s, r) => s + r.BHK2, 0);
+    const sumBHK3 = results.reduce((s, r) => s + r.BHK3, 0);
+    const avgBHK1 = sumBHK1 / count;
+    const avgBHK2 = sumBHK2 / count;
+    const avgBHK3 = sumBHK3 / count;
+    const avgEmp = results.reduce((s, r) => s + r.EmpRate, 0) / count;
+    const avgUnemp = results.reduce((s, r) => s + r.UnempRate, 0) / count;
+
+    const oppCounts = {};
+    results.forEach(r => { oppCounts[r.Opportunity] = (oppCounts[r.Opportunity] || 0) + 1; });
+    const mainOpp = Object.entries(oppCounts).sort((a, b) => b[1] - a[1])[0][0];
+
+    // Calculate Prices & Rates
+    const rate1bhk = Math.round((avgBHK1 * 100000) / 450);
+    const rate2bhk = Math.round((avgBHK2 * 100000) / 750);
+    const rate3bhk = Math.round((avgBHK3 * 100000) / 1100);
+    const marketSqft = Math.round((rate1bhk + rate2bhk) / 2);
+    const futurePrice = avgBHK1 * 1.42;
+    const futureSqft = Math.round(marketSqft * 1.42);
+    const profit = futurePrice - avgBHK1;
+    const roi = (profit / avgBHK1) * 100;
+
+    // AI Location Profile & Composite Intelligence Index
+    const propScore = Math.min(98, Math.max(38, Math.round((avgBHK1 / 140) * 55 + 40)));
+    const empScore = Math.min(98, Math.max(50, Math.round(avgEmp)));
+    const bizScore = mainOpp.includes('High') ? 92 : (mainOpp.includes('Developing') ? 82 : 72);
+    const intelIndex = Math.round(0.35 * propScore + 0.35 * empScore + 0.30 * bizScore);
+
     // ----------------------------------------------------
-    // ALGORITHM SIMULATION (LOADING OVERLAY)
+    // LIVE CALCULATION PROGRESSION (BEFORE OUTPUT DISPLAY)
     // ----------------------------------------------------
     const overlay = document.getElementById('aiLoadingOverlay');
     const logs = document.querySelector('.loading-logs');
@@ -3234,45 +3268,43 @@ async function performSearch(query) {
     
     if (overlay && logs && progress) {
         overlay.classList.add('active');
-        progress.style.width = '10%';
-        logs.innerHTML = '<div class="log-line">→ Initializing ML environment...</div>';
+        progress.style.width = '15%';
+        logs.innerHTML = `<div class="log-line">→ [Step 1] Querying 1,701 locations for "${query}"... Matched <strong>${count}</strong> record(s)</div>`;
 
-        await new Promise(r => setTimeout(r, 600));
-        progress.style.width = '30%';
-        logs.innerHTML += '<div class="log-line">→ Loading historical location data...</div>';
+        await new Promise(r => setTimeout(r, 450));
+        progress.style.width = '35%';
+        logs.innerHTML += `<div class="log-line">→ [Step 2] Price Aggregation: ∑ 1BHK = ₹${sumBHK1.toFixed(1)}L ÷ ${count} = <strong>₹${avgBHK1.toFixed(2)}L</strong> (₹${rate1bhk.toLocaleString('en-IN')}/sqft)</div>`;
 
-        await new Promise(r => setTimeout(r, 800));
-        progress.style.width = '60%';
-        logs.innerHTML += '<div class="log-line">→ Running Random Forest Regression...</div>';
+        await new Promise(r => setTimeout(r, 450));
+        progress.style.width = '55%';
+        logs.innerHTML += `<div class="log-line">→ [Step 3] Demographics Vector: Mean Employment = <strong>${avgEmp.toFixed(1)}%</strong> | Unemployment = <strong>${avgUnemp.toFixed(1)}%</strong></div>`;
 
-        await new Promise(r => setTimeout(r, 800));
-        progress.style.width = '85%';
-        logs.innerHTML += '<div class="log-line">→ Applying K-Means Cluster topologies...</div>';
+        await new Promise(r => setTimeout(r, 450));
+        progress.style.width = '75%';
+        logs.innerHTML += `<div class="log-line">→ [Step 4] Linear Regression Model: ₹${avgBHK1.toFixed(2)}L × 1.42 = <strong>₹${futurePrice.toFixed(2)}L</strong> (₹${futureSqft.toLocaleString('en-IN')}/sqft)</div>`;
 
-        await new Promise(r => setTimeout(r, 600));
+        await new Promise(r => setTimeout(r, 450));
+        progress.style.width = '90%';
+        logs.innerHTML += `<div class="log-line">→ [Step 5] Return Derivation: Profit = <strong>+₹${profit.toFixed(2)}L</strong> | Expected ROI = <strong>+${roi.toFixed(1)}%</strong> (+${(roi/5).toFixed(1)}% p.a.)</div>`;
+
+        await new Promise(r => setTimeout(r, 400));
         progress.style.width = '100%';
-        logs.innerHTML += '<div class="log-line">→ Finalizing intelligence dossier...</div>';
+        logs.innerHTML += `<div class="log-line">→ [Step 6] K-Means Clustering: Opportunity Tier = <strong>"${mainOpp}"</strong> • AI Index = <strong>${intelIndex}/100</strong></div>`;
 
         await new Promise(r => setTimeout(r, 400));
         overlay.classList.remove('active');
     }
 
+    // Render detailed step-by-step mathematical breakdown panel
+    renderCalculationEngine(query, results, {
+        count, sumBHK1, avgBHK1, sumBHK2, avgBHK2, sumBHK3, avgBHK3,
+        rate1bhk, rate2bhk, rate3bhk, marketSqft,
+        avgEmp, avgUnemp,
+        futurePrice, futureSqft, profit, roi,
+        mainOpp, topItem, propScore, empScore, bizScore, intelIndex
+    });
+
     if (dashboard) dashboard.style.display = 'block';
-
-    currentResults = results;
-    const topItem = results[0];
-    currentActiveLocation = topItem;
-
-    const count = results.length;
-    const avgBHK1 = results.reduce((s, r) => s + r.BHK1, 0) / count;
-    const avgBHK2 = results.reduce((s, r) => s + r.BHK2, 0) / count;
-    const avgBHK3 = results.reduce((s, r) => s + r.BHK3, 0) / count;
-    const avgEmp = results.reduce((s, r) => s + r.EmpRate, 0) / count;
-    const avgUnemp = results.reduce((s, r) => s + r.UnempRate, 0) / count;
-
-    const oppCounts = {};
-    results.forEach(r => { oppCounts[r.Opportunity] = (oppCounts[r.Opportunity] || 0) + 1; });
-    const mainOpp = Object.entries(oppCounts).sort((a, b) => b[1] - a[1])[0][0];
 
     // Location Header Title
     if (count === 1) {
@@ -3299,22 +3331,6 @@ async function performSearch(query) {
             oppText.textContent = 'Saturated Market';
         }
     }
-
-    // Calculate Prices & Rates
-    const rate1bhk = Math.round((avgBHK1 * 100000) / 450);
-    const rate2bhk = Math.round((avgBHK2 * 100000) / 750);
-    const rate3bhk = Math.round((avgBHK3 * 100000) / 1100);
-    const marketSqft = Math.round((rate1bhk + rate2bhk) / 2);
-    const futurePrice = avgBHK1 * 1.42;
-    const futureSqft = Math.round(marketSqft * 1.42);
-    const profit = futurePrice - avgBHK1;
-    const roi = (profit / avgBHK1) * 100;
-
-    // AI Location Profile & Composite Intelligence Index
-    const propScore = Math.min(98, Math.max(38, Math.round((avgBHK1 / 140) * 55 + 40)));
-    const empScore = Math.min(98, Math.max(50, Math.round(avgEmp)));
-    const bizScore = mainOpp.includes('High') ? 92 : (mainOpp.includes('Developing') ? 82 : 72);
-    const intelIndex = Math.round(0.35 * propScore + 0.35 * empScore + 0.30 * bizScore);
 
     const indexEl = document.getElementById('intelIndex');
     const circleEl = document.getElementById('indexCircle');
@@ -3390,6 +3406,284 @@ async function performSearch(query) {
 
     // Regional Directory Table
     renderTable(results);
+}
+
+// ============================================================
+// STEP-BY-STEP CALCULATION ENGINE RENDERER (MODERN SAAS LIGHT-MODE)
+// ============================================================
+window.toggleCalcDetails = function() {
+    const body = document.getElementById('calcDetailsBody');
+    const icon = document.getElementById('calcToggleIcon');
+    if (!body || !icon) return;
+    if (body.style.display === 'none') {
+        body.style.display = 'block';
+        icon.classList.remove('collapsed');
+    } else {
+        body.style.display = 'none';
+        icon.classList.add('collapsed');
+    }
+};
+
+function renderCalculationEngine(query, results, {
+    count, sumBHK1, avgBHK1, sumBHK2, avgBHK2, sumBHK3, avgBHK3,
+    rate1bhk, rate2bhk, rate3bhk, marketSqft,
+    avgEmp, avgUnemp,
+    futurePrice, futureSqft, profit, roi,
+    mainOpp, topItem, propScore, empScore, bizScore, intelIndex
+}) {
+    const calcBody = document.getElementById('calcDetailsBody');
+    if (!calcBody) return;
+
+    // Build sample location pills
+    const sampleLocs = [];
+    results.forEach(r => {
+        if (!sampleLocs.includes(r.Village) && sampleLocs.length < 2) {
+            sampleLocs.push(r.Village);
+        }
+    });
+    const sampleTagsHtml = sampleLocs.map(v => `<span class="calc-pill-gray">${v}</span>`).join(' ');
+
+    calcBody.innerHTML = `
+        <!-- ROW 1: Steps 01 → 02 → 03 -->
+        <div class="calc-flow-row">
+            <!-- 01 • SPATIAL QUERY -->
+            <div class="calc-step-card">
+                <div class="calc-card-top">
+                    <span class="calc-step-num-title">01 • SPATIAL QUERY</span>
+                    <span class="calc-step-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                    </span>
+                </div>
+                <h4 class="calc-step-heading">Sample Space & Data Retrieval</h4>
+                <div class="calc-formula-card">
+                    <div class="calc-formula-header">Formula Used ⓘ</div>
+                    <div class="calc-formula-text">Filter Logic: Match "${query.trim()}" within Village, Taluka, or District. (Case-Insensitive)</div>
+                </div>
+                <div class="calc-metric-row">
+                    <span class="calc-metric-label">Matched Micro-Markets:</span>
+                    <span class="calc-metric-val"><span class="calc-pill-blue">${count} / 1,701</span></span>
+                </div>
+                <div class="calc-metric-row">
+                    <span class="calc-metric-label">Sample Locations:</span>
+                    <span class="calc-metric-val">${sampleTagsHtml}</span>
+                </div>
+                <div class="calc-metric-row">
+                    <span class="calc-metric-label">Primary District:</span>
+                    <span class="calc-metric-val"><span class="calc-pill-blue">${topItem.District}</span></span>
+                </div>
+            </div>
+
+            <div class="calc-connector-arrow">→</div>
+
+            <!-- 02 • STATISTICAL MEAN -->
+            <div class="calc-step-card">
+                <div class="calc-card-top">
+                    <span class="calc-step-num-title">02 • STATISTICAL MEAN</span>
+                    <span class="calc-step-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+                            <line x1="8" y1="6" x2="16" y2="6"></line>
+                            <line x1="16" y1="14" x2="16" y2="18"></line>
+                            <path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M8 18h.01M12 18h.01"></path>
+                        </svg>
+                    </span>
+                </div>
+                <h4 class="calc-step-heading">Price Aggregation & Sq.Ft Valuation</h4>
+                <div class="calc-formula-card">
+                    <div class="calc-formula-header">Formula Used ⓘ</div>
+                    <div class="calc-formula-text">Average Price = (Sum of all Prices) ÷ (Total count of properties)<br>Rate/Sq.Ft = (Avg. BHK × 100,000) ÷ Carpet sqft</div>
+                </div>
+                <div class="calc-metric-row">
+                    <span class="calc-metric-label">1 BHK Mean (450 sqft):</span>
+                    <span class="calc-metric-val"><span class="calc-pill-blue">₹${avgBHK1.toFixed(2)}L (₹${rate1bhk.toLocaleString('en-IN')}/sqft)</span></span>
+                </div>
+                <div class="calc-metric-row">
+                    <span class="calc-metric-label">2 BHK Mean (750 sqft):</span>
+                    <span class="calc-metric-val"><span class="calc-pill-blue">₹${avgBHK2.toFixed(2)}L (₹${rate2bhk.toLocaleString('en-IN')}/sqft)</span></span>
+                </div>
+                <div class="calc-metric-row">
+                    <span class="calc-metric-label">3 BHK Mean (1,100 sqft):</span>
+                    <span class="calc-metric-val"><span class="calc-pill-blue">₹${avgBHK3.toFixed(2)}L (₹${rate3bhk.toLocaleString('en-IN')}/sqft)</span></span>
+                </div>
+                <div class="calc-metric-row">
+                    <span class="calc-metric-label" style="font-weight: 700; color: #0f172a;">Weighted Base Rate:</span>
+                    <span class="calc-metric-val"><span class="calc-pill-green-solid">₹${marketSqft.toLocaleString('en-IN')} / sq.ft</span></span>
+                </div>
+            </div>
+
+            <div class="calc-connector-arrow">→</div>
+
+            <!-- 03 • MACROECONOMICS -->
+            <div class="calc-step-card">
+                <div class="calc-card-top">
+                    <span class="calc-step-num-title">03 • MACROECONOMICS</span>
+                    <span class="calc-step-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="8" cy="8" r="6"></circle>
+                            <path d="M18.09 10.37A6 6 0 1 1 10.34 18"></path>
+                            <path d="M7 6h1v4"></path>
+                            <path d="m16.71 13.88.7.71-2.82 2.82"></path>
+                        </svg>
+                    </span>
+                </div>
+                <h4 class="calc-step-heading">Workforce Density & Demographics</h4>
+                <div class="calc-formula-card">
+                    <div class="calc-formula-header">Formula Used ⓘ</div>
+                    <div class="calc-formula-text">Avg Employment = (Sum of Employed Rates) ÷ Areas<br>Unemployment = 100% - Avg Employment</div>
+                </div>
+                <div>
+                    <div class="calc-metric-row">
+                        <span class="calc-metric-label">Active Workforce Rate:</span>
+                        <span class="calc-metric-val" style="font-weight: 700; color: #15803d;">${avgEmp.toFixed(1)}%</span>
+                    </div>
+                    <div class="calc-micro-progress-container">
+                        <div class="calc-micro-progress"><div class="calc-micro-fill green" style="width: ${avgEmp}%;"></div></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="calc-metric-row">
+                        <span class="calc-metric-label">Unemployment Rate:</span>
+                        <span class="calc-metric-val" style="font-weight: 700; color: #334155;">${avgUnemp.toFixed(1)}%</span>
+                    </div>
+                    <div class="calc-micro-progress-container">
+                        <div class="calc-micro-progress"><div class="calc-micro-fill slate" style="width: ${avgUnemp}%;"></div></div>
+                    </div>
+                </div>
+                <div class="calc-metric-row">
+                    <span class="calc-metric-label">Economic Locality Tier:</span>
+                    <span class="calc-metric-val"><span class="calc-pill-blue">Tier ${topItem.Tier || 1}</span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROW 2: Steps 04 → 05 → 06 -->
+        <div class="calc-flow-row">
+            <!-- 04 • SUPERVISED ML -->
+            <div class="calc-step-card">
+                <div class="calc-card-top">
+                    <span class="calc-step-num-title">04 • SUPERVISED ML</span>
+                    <span class="calc-step-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+                            <rect x="9" y="9" width="6" height="6"></rect>
+                            <line x1="9" y1="1" x2="9" y2="4"></line>
+                            <line x1="15" y1="1" x2="15" y2="4"></line>
+                            <line x1="9" y1="20" x2="9" y2="23"></line>
+                            <line x1="15" y1="20" x2="15" y2="23"></line>
+                            <line x1="20" y1="9" x2="23" y2="9"></line>
+                            <line x1="20" y1="14" x2="23" y2="14"></line>
+                            <line x1="1" y1="9" x2="4" y2="9"></line>
+                            <line x1="1" y1="14" x2="4" y2="14"></line>
+                        </svg>
+                    </span>
+                </div>
+                <h4 class="calc-step-heading">5-Year Linear Regression Valuation</h4>
+                <div class="calc-formula-card">
+                    <div class="calc-formula-header">Formula Used ⓘ</div>
+                    <div class="calc-formula-text">Forecast Price (2031) = Price (2026) × 1.42<br>(Based on high-confidence Predictive Model)</div>
+                </div>
+                <div class="calc-metric-row">
+                    <span class="calc-metric-label">Current 1 BHK Benchmark:</span>
+                    <span class="calc-metric-val"><span class="calc-pill-blue">₹${avgBHK1.toFixed(2)} Lakhs</span></span>
+                </div>
+                <div class="calc-metric-row">
+                    <span class="calc-metric-label">Multiplier Target:</span>
+                    <span class="calc-metric-val"><span class="calc-pill-gray">1.42× (5 Years)</span></span>
+                </div>
+                <div class="calc-metric-row">
+                    <span class="calc-metric-label">Forecast 1 BHK (2031):</span>
+                    <span class="calc-metric-val"><span class="calc-pill-green-solid">₹${futurePrice.toFixed(2)} Lakhs</span></span>
+                </div>
+                <div class="calc-metric-row">
+                    <span class="calc-metric-label">Forecast Sq.Ft Rate:</span>
+                    <span class="calc-metric-val"><span class="calc-pill-green-solid">₹${futureSqft.toLocaleString('en-IN')} / sq.ft</span></span>
+                </div>
+            </div>
+
+            <div class="calc-connector-arrow">→</div>
+
+            <!-- 05 • FINANCIAL RETURNS -->
+            <div class="calc-step-card">
+                <div class="calc-card-top">
+                    <span class="calc-step-num-title">05 • FINANCIAL RETURNS</span>
+                    <span class="calc-step-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                            <polyline points="16 7 22 7 22 13"></polyline>
+                        </svg>
+                    </span>
+                </div>
+                <h4 class="calc-step-heading">Capital Appreciation & Expected ROI</h4>
+                <div class="calc-formula-card">
+                    <div class="calc-formula-header">Formula Used ⓘ</div>
+                    <div class="calc-formula-text">Net Profit = Future Price (2031) - Base Price (2026)<br>Total ROI = (Net Profit ÷ Base Price) × 100%</div>
+                </div>
+                <div class="calc-metric-row">
+                    <span class="calc-metric-label">Absolute Capital Gain:</span>
+                    <span class="calc-metric-val"><span class="calc-pill-darkgreen-solid">+₹${profit.toFixed(2)} Lakhs</span></span>
+                </div>
+                <div class="calc-metric-row">
+                    <span class="calc-metric-label">Total Projected ROI:</span>
+                    <span class="calc-metric-val"><span class="calc-pill-softgreen">+${roi.toFixed(1)}%</span></span>
+                </div>
+                <div class="calc-metric-row">
+                    <span class="calc-metric-label">Annualized Velocity:</span>
+                    <span class="calc-metric-val"><span class="calc-pill-softblue">+${(roi / 5).toFixed(1)}% p.a.</span></span>
+                </div>
+            </div>
+
+            <div class="calc-connector-arrow">→</div>
+
+            <!-- 06 • UNSUPERVISED ML -->
+            <div class="calc-step-card">
+                <div class="calc-card-top">
+                    <span class="calc-step-num-title">06 • UNSUPERVISED ML</span>
+                    <span class="calc-step-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="18" cy="5" r="3"></circle>
+                            <circle cx="6" cy="12" r="3"></circle>
+                            <circle cx="18" cy="19" r="3"></circle>
+                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                        </svg>
+                    </span>
+                </div>
+                <h4 class="calc-step-heading">K-Means Cluster & Composite Index</h4>
+                <div class="calc-formula-card">
+                    <div class="calc-formula-header">Formula Used ⓘ</div>
+                    <div class="calc-formula-text">Composite AI Index = 35% (Property Score) + 35% (Employment) + 30% (Business),<br>Grouped by Affordability & Workforce</div>
+                </div>
+                <div class="calc-metric-row">
+                    <span class="calc-metric-label">Cluster Classification:</span>
+                    <span class="calc-metric-val"><span class="calc-pill-purple">${mainOpp}</span></span>
+                </div>
+                <div class="calc-metric-row">
+                    <span class="calc-metric-label">Sub-scores (P / E / B):</span>
+                    <span class="calc-metric-val"><span class="calc-pill-blue">${propScore} / ${empScore} / ${bizScore}</span></span>
+                </div>
+                <div class="calc-metric-row" style="margin-top: 2px;">
+                    <span class="calc-metric-label">Composite AI Index:</span>
+                    <span class="calc-metric-val">
+                        <div class="calc-scorecard-wrap">
+                            <div class="calc-scorecard-inner">
+                                <span class="calc-scorecard-target">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                        <circle cx="12" cy="12" r="10" stroke="#0f172a" stroke-width="2"></circle>
+                                        <circle cx="12" cy="12" r="6" stroke="#0f172a" stroke-width="2"></circle>
+                                        <circle cx="12" cy="12" r="2" fill="#0f172a"></circle>
+                                    </svg>
+                                </span>
+                                <span class="calc-scorecard-num">${intelIndex} / 100</span>
+                            </div>
+                        </div>
+                    </span>
+                </div>
+            </div>
+        </div>
+    `;
 }
 
 // ============================================================

@@ -3468,12 +3468,11 @@ function renderCalculationEngine(query, results, {
     const sampleTagsHtml = sampleLocs.map(v => `<span class="calc-pill-gray">${v}</span>`).join(' ');
 
     calcBody.innerHTML = `
-        <!-- ROW 1: Steps 01 → 02 → 03 -->
-        <div class="calc-flow-row">
+        <div class="calc-steps-grid">
             <!-- 01 • SPATIAL QUERY -->
             <div class="calc-step-card">
                 <div class="calc-card-top">
-                    <span class="calc-step-num-title">01 • SPATIAL QUERY</span>
+                    <span class="calc-step-num-title">01 • SPATIAL QUERY <span class="calc-step-arrow">→</span></span>
                     <span class="calc-step-icon">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
@@ -3495,12 +3494,12 @@ function renderCalculationEngine(query, results, {
                         <span class="calc-flow-arrow">→</span>
                         <span class="calc-flow-doc-pill">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-                            Match in Village, Taluka, District
+                            Match Locality Records
                         </span>
                         <span class="calc-flow-arrow">→</span>
                         <span class="calc-flow-result">Result</span>
                     </div>
-                    <div class="calc-flow-caption">Sub-string matching logic</div>
+                    <div class="calc-flow-caption">Sub-string matching logic across 1,701 records</div>
                 </div>
                 <div class="calc-metric-row">
                     <span class="calc-metric-label">Matched Micro-Markets:</span>
@@ -3516,12 +3515,10 @@ function renderCalculationEngine(query, results, {
                 </div>
             </div>
 
-            <div class="calc-connector-arrow">→</div>
-
             <!-- 02 • STATISTICAL MEAN -->
             <div class="calc-step-card">
                 <div class="calc-card-top">
-                    <span class="calc-step-num-title">02 • STATISTICAL MEAN</span>
+                    <span class="calc-step-num-title">02 • STATISTICAL MEAN <span class="calc-step-arrow">→</span></span>
                     <span class="calc-step-icon">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="4" y="2" width="16" height="20" rx="2"></rect>
@@ -3540,18 +3537,18 @@ function renderCalculationEngine(query, results, {
                     <div class="calc-math-equation">
                         <span class="calc-math-label">Average Price = </span>
                         <span class="calc-frac">
-                            <span class="calc-frac-num">(Sum of all Prices)</span>
+                            <span class="calc-frac-num">∑ (Property Prices)</span>
                             <span class="calc-frac-bar"></span>
-                            <span class="calc-frac-den">Total count of properties</span>
+                            <span class="calc-frac-den">Total Properties</span>
                         </span>
                     </div>
                     <!-- Stacked Fraction 2 -->
                     <div class="calc-math-equation">
-                        <span class="calc-math-label">Rate/Sq.Ft = </span>
+                        <span class="calc-math-label">Rate / Sq.Ft = </span>
                         <span class="calc-frac">
-                            <span class="calc-frac-num">(Avg. BHK Price × 100,000)</span>
+                            <span class="calc-frac-num">Avg. Price × 100,000</span>
                             <span class="calc-frac-bar"></span>
-                            <span class="calc-frac-den">Carpet Sq.Ft</span>
+                            <span class="calc-frac-den">Carpet Area (sq.ft)</span>
                         </span>
                     </div>
                 </div>
@@ -3573,12 +3570,10 @@ function renderCalculationEngine(query, results, {
                 </div>
             </div>
 
-            <div class="calc-connector-arrow">→</div>
-
             <!-- 03 • MACROECONOMICS -->
             <div class="calc-step-card">
                 <div class="calc-card-top">
-                    <span class="calc-step-num-title">03 • MACROECONOMICS</span>
+                    <span class="calc-step-num-title">03 • MACROECONOMICS <span class="calc-step-arrow">→</span></span>
                     <span class="calc-step-icon">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="8" cy="8" r="6"></circle>
@@ -3597,9 +3592,9 @@ function renderCalculationEngine(query, results, {
                     <div class="calc-math-equation">
                         <span class="calc-math-label">Avg Employment = </span>
                         <span class="calc-frac">
-                            <span class="calc-frac-num">(Sum of Area Employed Rates)</span>
+                            <span class="calc-frac-num">∑ (Employed Rate %)</span>
                             <span class="calc-frac-bar"></span>
-                            <span class="calc-frac-den">Number of Areas</span>
+                            <span class="calc-frac-den">Total Localities</span>
                         </span>
                     </div>
                     <!-- Equation: Unemployment -->
@@ -3630,14 +3625,11 @@ function renderCalculationEngine(query, results, {
                     <span class="calc-metric-val"><span class="calc-pill-blue">Tier ${topItem.Tier || 1}</span></span>
                 </div>
             </div>
-        </div>
 
-        <!-- ROW 2: Steps 04 → 05 → 06 -->
-        <div class="calc-flow-row">
             <!-- 04 • SUPERVISED ML -->
             <div class="calc-step-card">
                 <div class="calc-card-top">
-                    <span class="calc-step-num-title">04 • SUPERVISED ML</span>
+                    <span class="calc-step-num-title">04 • SUPERVISED ML <span class="calc-step-arrow">→</span></span>
                     <span class="calc-step-icon">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="4" y="4" width="16" height="16" rx="2"></rect>
@@ -3682,12 +3674,10 @@ function renderCalculationEngine(query, results, {
                 </div>
             </div>
 
-            <div class="calc-connector-arrow">→</div>
-
             <!-- 05 • FINANCIAL RETURNS -->
             <div class="calc-step-card">
                 <div class="calc-card-top">
-                    <span class="calc-step-num-title">05 • FINANCIAL RETURNS</span>
+                    <span class="calc-step-num-title">05 • FINANCIAL RETURNS <span class="calc-step-arrow">→</span></span>
                     <span class="calc-step-icon">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                             <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
@@ -3734,12 +3724,10 @@ function renderCalculationEngine(query, results, {
                 </div>
             </div>
 
-            <div class="calc-connector-arrow">→</div>
-
             <!-- 06 • UNSUPERVISED ML -->
             <div class="calc-step-card">
                 <div class="calc-card-top">
-                    <span class="calc-step-num-title">06 • UNSUPERVISED ML</span>
+                    <span class="calc-step-num-title">06 • UNSUPERVISED ML <span class="calc-step-check">✓</span></span>
                     <span class="calc-step-icon">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="18" cy="5" r="3"></circle>

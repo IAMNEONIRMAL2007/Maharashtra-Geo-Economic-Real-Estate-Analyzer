@@ -2070,11 +2070,14 @@ body {
     background: #ffffff;
 }
 
+.calc-steps-grid,
 .calc-flow-row {
-    display: flex;
-    align-items: stretch;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
     margin-bottom: 16px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .calc-flow-row:last-child {
@@ -2082,29 +2085,24 @@ body {
 }
 
 .calc-connector-arrow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #cbd5e1;
-    font-size: 1.35rem;
-    font-weight: 400;
-    padding: 0 4px;
-    user-select: none;
-    flex-shrink: 0;
+    display: none;
 }
 
 .calc-step-card {
-    flex: 1;
-    min-width: 0;
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 14px;
-    padding: 18px 20px;
+    padding: 16px 18px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 11px;
     transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .calc-step-card:hover {
@@ -2116,15 +2114,30 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: -4px;
+    margin-bottom: -2px;
 }
 
 .calc-step-num-title {
-    font-size: 0.82rem;
+    font-size: 0.80rem;
     font-weight: 800;
     color: #0f172a;
     letter-spacing: 0.03em;
     text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.calc-step-arrow {
+    color: #2563eb;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.calc-step-check {
+    color: #16a34a;
+    font-weight: 700;
+    font-size: 0.85rem;
 }
 
 .calc-step-icon {
@@ -2295,25 +2308,29 @@ body {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    margin: 6px 0;
+    margin: 5px 0;
     font-size: 0.76rem;
     color: #0f172a;
+    flex-wrap: wrap;
+    gap: 4px;
+    max-width: 100%;
 }
 
 .calc-math-label {
     font-weight: 600;
     color: #0f172a;
-    white-space: nowrap;
-    margin-right: 6px;
+    white-space: normal;
+    margin-right: 4px;
     font-size: 0.74rem;
 }
 
 .calc-math-bold-eq {
-    font-size: 0.82rem;
+    font-size: 0.80rem;
     font-weight: 700;
     color: #0f172a;
     letter-spacing: -0.01em;
     line-height: 1.4;
+    word-break: break-word;
 }
 
 .calc-math-subtext {
@@ -2332,14 +2349,17 @@ body {
     font-size: 0.72rem;
     line-height: 1.15;
     margin: 0 3px;
+    max-width: 100%;
 }
 
 .calc-frac-num {
     padding-bottom: 2px;
     color: #0f172a;
     font-weight: 600;
-    white-space: nowrap;
+    white-space: normal;
+    text-align: center;
     font-size: 0.72rem;
+    word-break: break-word;
 }
 
 .calc-frac-bar {
@@ -2351,10 +2371,12 @@ body {
 
 .calc-frac-den {
     padding-top: 2px;
-    color: #334155;
+    color: #475569;
     font-weight: 500;
-    white-space: nowrap;
-    font-size: 0.70rem;
+    white-space: normal;
+    text-align: center;
+    font-size: 0.69rem;
+    word-break: break-word;
 }
 
 .calc-math-op {
@@ -2578,10 +2600,11 @@ body {
 }
 
 /* Responsive adjustments for calculation flow */
-@media (max-width: 992px) {
+@media (max-width: 768px) {
+    .calc-steps-grid,
     .calc-flow-row {
-        flex-direction: column;
-        gap: 16px;
+        grid-template-columns: 1fr;
+        gap: 14px;
     }
     .calc-connector-arrow {
         display: none;
